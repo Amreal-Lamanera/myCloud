@@ -1,0 +1,7 @@
+// config.js
+export const API_GETIMGS_URL = 'http://francescopieraccini.localhost/admin/c-panel/apis/getAllImgsFromCloud.php';
+export const API_CHECKLOGGED_URL = 'http://francescopieraccini.localhost/admin/c-panel/apis/checkLogged.php';
+export const REDIRECT_URL = 'http://francescopieraccini.localhost/admin/c-panel/';
+export const IMGS_DIR = '/cloudImgs/';
+export const API_INSERTIMG_URL = "http://francescopieraccini.localhost/admin/c-panel/apis/insertImgsInCloud.php";
+export const AMBIENTE = "DEV";

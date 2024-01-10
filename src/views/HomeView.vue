@@ -5,7 +5,7 @@
           loading="lazy"
           title="Click per download" 
           class="cursor-pointer"  
-          :src="'./cloudImgs/' + src" 
+          :src="imgs_dir + src"
           alt="" 
           @mouseover="showKey = key"
           @mouseout="showKey = null"
@@ -15,7 +15,7 @@
           :class="showKey === key ? 'flex' : 'hidden'" 
           @mousemove="showKey = key" 
           @mouseleave="showKey = null"
-          @click="downloadImage('./cloudImgs/' + src)"
+          @click="downloadImage(imgs_dir + src)"
         >
           <input type="hidden" name="file" value="<?= $file ?>">
           <input name="table" type="hidden" value="<?= $table ?>">
@@ -30,6 +30,8 @@
 <script>
   // @ is an alias to /src
   import axios from 'axios';
+  import { API_GETIMGS_URL, API_CHECKLOGGED_URL, IMGS_DIR, AMBIENTE } from '/config.js';
+
 
   export default {
     name: 'HomeView',
@@ -38,25 +40,24 @@
     data() {
       return {
         responseData: null,
-        showKey: null
+        showKey: null,
+        imgs_dir: null,
       };
     },
     methods: {
       async checkLogged() {
         try {
           // Esegui la chiamata API utilizzando axios
-          // TODO:
-          // LOCALE:
-          // const response = await axios.get('http://francescopieraccini.localhost/admin/c-panel/apis/checkLogged.php');
-          // ONLINE
-          const response = await axios.get('../apis/checkLogged.php');
+          const response = await axios.get(API_CHECKLOGGED_URL);
           console.log(response);
 
           // Salva i dati ottenuti dalla chiamata nell'oggetto 'responseData'
           // this.responseData = response.data;
           console.log(response.data);
-          if (!response.data.logged) {
-            window.location.href = '../index.php';
+          if (AMBIENTE === "PROD") {
+            if (!response.data.logged) {
+              window.location.href = '../index.php';
+            }
           }
         } catch (error) {
           console.error('Errore durante la chiamata API:', error);
@@ -66,11 +67,7 @@
       async fetchData() {
         try {
           // Esegui la chiamata API utilizzando axios
-          // TODO:
-          // LOCALE:
-          // const response = await axios.get('http://francescopieraccini.localhost/admin/c-panel/apis/getAllImgsFromCloud.php');
-          // ONLINE
-          const response = await axios.get('../apis/getAllImgsFromCloud.php');
+          const response = await axios.get(API_GETIMGS_URL);
           console.log(response);
           
           // Salva i dati ottenuti dalla chiamata nell'oggetto 'responseData'
@@ -125,6 +122,7 @@
     mounted() {
       this.setDocumentTitle();
       this.loadData();
+      this.imgs_dir = IMGS_DIR;
     },
   }
 </script>

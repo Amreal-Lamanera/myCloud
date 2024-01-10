@@ -41,6 +41,26 @@
       };
     },
     methods: {
+      async checkLogged() {
+        try {
+          // Esegui la chiamata API utilizzando axios
+          // TODO:
+          // LOCALE:
+          // const response = await axios.get('http://francescopieraccini.localhost/admin/c-panel/apis/checkLogged.php');
+          // ONLINE
+          const response = await axios.get('../apis/checkLogged.php');
+          console.log(response);
+
+          // Salva i dati ottenuti dalla chiamata nell'oggetto 'responseData'
+          // this.responseData = response.data;
+          console.log(response.data);
+          if (!response.data.logged) {
+            window.location.href = '../index.php';
+          }
+        } catch (error) {
+          console.error('Errore durante la chiamata API:', error);
+        }
+      },
       // Funzione per effettuare la chiamata API
       async fetchData() {
         try {
@@ -92,11 +112,18 @@
           })
           .catch(error => console.error('Errore durante il download dell\'immagine:', error));
       },
+      async setDocumentTitle() {
+        document.title = 'myCloud - Home';
+      },
+
+      async loadData() {
+        await this.checkLogged();
+        this.fetchData();
+      },
     },
     mounted() {
-      // Chiamare la funzione fetchData al caricamento del componente, ad esempio
-      this.fetchData();
-      document.title = 'myCloud - Home';
+      this.setDocumentTitle();
+      this.loadData();
     },
   }
 </script>

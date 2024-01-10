@@ -1,7 +1,8 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/upload">Upload</router-link>
+    <router-link to="/upload">Upload</router-link> |
+    <a href="../">C-panel</a>
   </nav>
   <router-view v-slot="slotProps">
     <transition name="fade" mode="out-in">

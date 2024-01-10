@@ -2,6 +2,7 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 items-center gap-4 p-4" v-if="responseData !== null">
       <div class="relative" v-for="(src, key) in responseData" :key="key">
         <img
+          loading="lazy"
           title="Click per download" 
           class="cursor-pointer"  
           :src="'./cloudImgs/' + src" 

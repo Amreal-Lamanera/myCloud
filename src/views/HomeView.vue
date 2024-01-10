@@ -60,7 +60,7 @@
         }
       },
       downloadImage(link) {
-        const imageUrl = './cloudImgs/' + link;
+        const imageUrl = link;
         console.log(imageUrl);
 
         // Usa fetch per ottenere i dati dell'immagine

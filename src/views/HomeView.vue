@@ -35,69 +35,69 @@
     components: {
     },
     data() {
-    return {
-      responseData: null,
-      showKey: null
-    };
-  },
-  methods: {
-    // Funzione per effettuare la chiamata API
-    async fetchData() {
-      try {
-        // Esegui la chiamata API utilizzando axios
-        // TODO:
-        // LOCALE:
-        // const response = await axios.get('http://francescopieraccini.localhost/admin/c-panel/apis/getAllImgsFromCloud.php');
-        // ONLINE
-        const response = await axios.get('../apis/getAllImgsFromCloud.php');
-        console.log(response);
-        
-        // Salva i dati ottenuti dalla chiamata nell'oggetto 'responseData'
-        this.responseData = response.data;
-        console.log(this.responseData);
-      } catch (error) {
-        console.error('Errore durante la chiamata API:', error);
-      }
+      return {
+        responseData: null,
+        showKey: null
+      };
     },
-    downloadImage(link) {
-      const imageUrl = './cloudImgs/' + link;
-      console.log(imageUrl);
+    methods: {
+      // Funzione per effettuare la chiamata API
+      async fetchData() {
+        try {
+          // Esegui la chiamata API utilizzando axios
+          // TODO:
+          // LOCALE:
+          // const response = await axios.get('http://francescopieraccini.localhost/admin/c-panel/apis/getAllImgsFromCloud.php');
+          // ONLINE
+          const response = await axios.get('../apis/getAllImgsFromCloud.php');
+          console.log(response);
+          
+          // Salva i dati ottenuti dalla chiamata nell'oggetto 'responseData'
+          this.responseData = response.data;
+          console.log(this.responseData);
+        } catch (error) {
+          console.error('Errore durante la chiamata API:', error);
+        }
+      },
+      downloadImage(link) {
+        const imageUrl = './cloudImgs/' + link;
+        console.log(imageUrl);
 
-      // Usa fetch per ottenere i dati dell'immagine
-      fetch(imageUrl)
-        .then(response => response.blob())
-        .then(blob => {
-          // Crea un oggetto URL per il blob
-          const url = window.URL.createObjectURL(blob);
+        // Usa fetch per ottenere i dati dell'immagine
+        fetch(imageUrl)
+          .then(response => response.blob())
+          .then(blob => {
+            // Crea un oggetto URL per il blob
+            const url = window.URL.createObjectURL(blob);
 
-          // Crea un elemento <a> per il download
-          const a = document.createElement('a');
-          a.href = url;
-          // Specifica il nome del file da scaricare
-          let nomeImg = link.split('/');
-          nomeImg = nomeImg[(nomeImg.length - 1)];
-          a.download = nomeImg;
+            // Crea un elemento <a> per il download
+            const a = document.createElement('a');
+            a.href = url;
+            // Specifica il nome del file da scaricare
+            let nomeImg = link.split('/');
+            nomeImg = nomeImg[(nomeImg.length - 1)];
+            a.download = nomeImg;
 
-          // Aggiungi l'elemento <a> al documento
-          document.body.appendChild(a);
+            // Aggiungi l'elemento <a> al documento
+            document.body.appendChild(a);
 
-          // Simula un clic sull'elemento <a> per avviare il download
-          a.click();
+            // Simula un clic sull'elemento <a> per avviare il download
+            a.click();
 
-          // Rimuovi l'elemento <a> dal documento
-          document.body.removeChild(a);
+            // Rimuovi l'elemento <a> dal documento
+            document.body.removeChild(a);
 
-          // Rilascia l'URL dell'oggetto blob
-          window.URL.revokeObjectURL(url);
-        })
-        .catch(error => console.error('Errore durante il download dell\'immagine:', error));
+            // Rilascia l'URL dell'oggetto blob
+            window.URL.revokeObjectURL(url);
+          })
+          .catch(error => console.error('Errore durante il download dell\'immagine:', error));
+      },
     },
-  },
-  mounted() {
-    // Chiamare la funzione fetchData al caricamento del componente, ad esempio
-    this.fetchData();
-    document.title = 'iPiera Cloud - Home';
-  },
+    mounted() {
+      // Chiamare la funzione fetchData al caricamento del componente, ad esempio
+      this.fetchData();
+      document.title = 'myCloud - Home';
+    },
   }
 </script>
 

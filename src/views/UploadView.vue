@@ -17,3 +17,11 @@
     </div>
   </section>
 </template>
+
+<script>
+  export default {
+    mounted() {
+      document.title = 'myCloud - Upload';
+    },
+  }
+</script>

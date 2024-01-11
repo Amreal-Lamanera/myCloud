@@ -1,54 +1,76 @@
 <template>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 items-center gap-4 p-4" v-if="responseData !== null">
-      <div class="relative h-full flex items-center" v-for="(src, key) in responseData" :key="key">
-        <img
-          loading="lazy"
-          title="Click per download" 
-          class="max-w-full max-h-full"
-          :src="imgs_dir + src"
-          alt="" 
-          @mouseover="showKey = key"
-          @mouseout="showKey = null"
-        >
-        <div 
-          class="layover flex gap-4"
-          :class="showKey === key ? 'flex' : 'hidden'" 
-          @mousemove="showKey = key" 
-          @mouseleave="showKey = null"
-        >
-          <div
-              class="text-white font-bold cursor-pointer bg-blue-900 border-white border-2 p-3 uppercase"
-              @click="downloadImage(imgs_dir + src)"
-          >
-              download
-          </div>
-          <div
-              class="text-white font-bold cursor-pointer bg-red-900 border-white border-2 p-3 uppercase"
-              @click="deleteFile(src)"
-          >
-              elimina
-          </div>
-        </div>
-      </div>
+  <div class="py-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 items-center gap-4 p-4">
+      <image-gallery :images="srcs" />
     </div>
+    <div class="flex gap-4 justify-center pt-6">
+      <button
+          class="
+            btn
+            text-white
+            p-3
+            border-4
+            border-white
+            rounded-full
+            font-bold
+          "
+          @click="(pagina === 0) ? '': pagina--"
+          :class="(pagina === 0) ? 'bg-gray-900' : 'bg-blue-600 hover:bg-blue-950'"
+      >
+        back
+      </button>
+      <button
+          class="
+            btn
+            text-white
+            p-3
+            border-4
+            border-white
+            rounded-full
+            font-bold
+          "
+          @click="((maxPerPagina * (pagina + 1)) > (srcImgsList.length - 1)) ? '' : pagina++"
+          :class="((maxPerPagina * (pagina + 1)) > (srcImgsList.length - 1)) ? 'bg-gray-900' : 'bg-blue-600 hover:bg-blue-950'"
+      >
+        next
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
   // @ is an alias to /src
   import axios from 'axios';
   // import { cacheAdapterEnhancer } from 'axios-extensions';
-  import { API_GETIMGS_URL, API_DELETEIMG_URL, API_CHECKLOGGED_URL, IMGS_DIR, AMBIENTE } from '/config.js';
+  import { API_GETIMGS_URL, API_DELETEIMG_URL, API_CHECKLOGGED_URL, AMBIENTE } from '/config.js';
+  import ImageGallery from '@/components/ImagesGallery.vue';
 
   export default {
     name: 'HomeView',
     components: {
+      ImageGallery
     },
     data() {
       return {
-        responseData: null,
-        showKey: null,
-        imgs_dir: null,
+        srcImgsList: [],
+        maxPerPagina: 12,
+        pagina: 0
       };
+    },
+    computed: {
+      srcs() {
+        let array = [];
+        for (let i = (this.maxPerPagina * this.pagina); i < (this.maxPerPagina * (this.pagina + 1)); i++) {
+          console.log(i);
+          if (!this.srcImgsList[i]) {
+            break;
+          }
+          array.push(this.srcImgsList[i]);
+        }
+        console.log(array);
+        console.log(this.pagina);
+        return array;
+      }
     },
     methods: {
       async checkLogged() {
@@ -57,9 +79,7 @@
           const response = await axios.get(API_CHECKLOGGED_URL);
           console.log(response);
 
-          // Salva i dati ottenuti dalla chiamata nell'oggetto 'responseData'
-          // this.responseData = response.data;
-          console.log(response.data);
+          // in prod se non risulta utente loggato rimando al c-panel
           if (AMBIENTE === "PROD") {
             if (!response.data.logged) {
               window.location.href = '../index.php';
@@ -76,9 +96,9 @@
           const response = await axios.get(API_GETIMGS_URL);
           console.log(response);
           
-          // Salva i dati ottenuti dalla chiamata nell'oggetto 'responseData'
-          this.responseData = response.data;
-          console.log(this.responseData);
+          // Salva i dati ottenuti dalla chiamata nell'oggetto 'srcImgsList'
+          this.srcImgsList = response.data;
+          console.log(this.srcImgsList);
         } catch (error) {
           console.error('Errore durante la chiamata API:', error);
         }
@@ -134,7 +154,7 @@
           })
           .catch(error => console.error('Errore durante il download dell\'immagine:', error));
       },
-      async setDocumentTitle() {
+      setDocumentTitle() {
         document.title = 'myCloud - Home';
       },
 
@@ -146,26 +166,23 @@
     mounted() {
       this.setDocumentTitle();
       this.loadData();
-      this.imgs_dir = IMGS_DIR;
     },
   }
 </script>
 
-<style>
-.layover {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 10000;
-    /* display: flex; */
-    align-items: center;
-    justify-content: center;
-}
+<style lang="scss">
 
-.layover img {
-    filter: invert(1);
-}
+  .layover {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 10000;
+      /* display: flex; */
+      align-items: center;
+      justify-content: center;
+  }
+
 </style>

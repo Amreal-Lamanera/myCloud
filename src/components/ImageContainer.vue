@@ -1,7 +1,7 @@
 <template>
 <!--        loading="lazy"-->
     <img
-        :class="imageLoaded ? 'hiddend' : ''"
+        :class="!imageLoaded ? 'hidden' : ''"
         title="Click per download"
         class="max-w-full max-h-full my_img"
         :src="path"
@@ -18,13 +18,13 @@
     >
       <div
           class="text-white font-bold cursor-pointer bg-blue-500 border-white border-2 p-3 uppercase hover:bg-blue-950"
-          @click="downloadImage(imgs_dir + src)"
+          @click="downloadImage(path)"
       >
         download
       </div>
       <div
           class="text-white font-bold cursor-pointer bg-red-500 border-white border-2 p-3 uppercase hover:bg-red-950"
-          @click="deleteFile(src)"
+          @click="deleteFile(filename)"
       >
         elimina
       </div>
@@ -39,6 +39,7 @@ import axios from "axios";
 export default {
   props: {
     path: String,
+    filename: String,
     index: Number,
   },
   data() {

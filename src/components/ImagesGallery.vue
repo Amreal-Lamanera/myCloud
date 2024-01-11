@@ -1,33 +1,16 @@
 <template>
-  <div class="relative h-full flex items-center" v-for="(src, key) in images" :key="key">
-    <img
-        loading="lazy"
-        title="Click per download"
-        class="max-w-full max-h-full"
-        :src="imgs_dir + src"
-        alt=""
-        @mouseover="showKey = key"
-        @mouseout="showKey = null"
-    >
-    <div
-        class="layover flex gap-4"
-        :class="showKey === key ? 'flex' : 'hidden'"
-        @mousemove="showKey = key"
-        @mouseleave="showKey = null"
-    >
-      <div
-          class="text-white font-bold cursor-pointer bg-blue-500 border-white border-2 p-3 uppercase hover:bg-blue-950"
-          @click="downloadImage(imgs_dir + src)"
-      >
-        download
-      </div>
-      <div
-          class="text-white font-bold cursor-pointer bg-red-500 border-white border-2 p-3 uppercase hover:bg-red-950"
-          @click="deleteFile(src)"
-      >
-        elimina
-      </div>
-    </div>
+  <div
+      class="
+        relative
+        h-full
+        flex
+        items-center
+        justify-center"
+        v-for="(src, key) in images"
+        :key="key
+      "
+  >
+    <image-container :path="imgs_dir + src" :index="key" />
   </div>
 </template>
 
@@ -35,8 +18,10 @@
 
 import {API_DELETEIMG_URL, IMGS_DIR} from '/config.js';
 import axios from "axios";
+import ImageContainer from "@/components/ImageContainer";
 
   export default {
+    components: {ImageContainer},
     props: {
       images: Array
     },

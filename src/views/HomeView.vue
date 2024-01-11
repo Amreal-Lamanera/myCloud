@@ -1,5 +1,10 @@
 <template>
   <div class="py-6">
+    <div v-if="error" class="pb-6">
+      <span class="text-xl text-red-500 bg-gray-200 p-3 border-4 border-red-500">
+        {{ error}}
+      </span>
+    </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 items-center gap-4 p-4">
       <image-gallery :images="srcs" />
     </div>
@@ -54,7 +59,8 @@
       return {
         srcImgsList: [],
         maxPerPagina: 12,
-        pagina: 0
+        pagina: 0,
+        error: null
       };
     },
     computed: {
@@ -164,6 +170,9 @@
     mounted() {
       this.setDocumentTitle();
       this.loadData();
+      if (this.$route.query.error) {
+        this.error = this.$route.query.error;
+      }
     },
   }
 </script>

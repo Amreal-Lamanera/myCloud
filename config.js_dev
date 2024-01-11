@@ -1,5 +1,6 @@
 // config.js
 export const API_GETIMGS_URL = 'http://francescopieraccini.localhost/admin/c-panel/apis/getAllImgsFromCloud.php';
+export const API_DELETEIMG_URL = 'http://francescopieraccini.localhost/admin/c-panel/apis/deleteImgFromCloud.php';
 export const API_CHECKLOGGED_URL = 'http://francescopieraccini.localhost/admin/c-panel/apis/checkLogged.php';
 export const REDIRECT_URL = 'http://francescopieraccini.localhost/admin/c-panel/';
 export const IMGS_DIR = '/cloudImgs/';

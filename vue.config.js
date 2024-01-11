@@ -7,6 +7,9 @@ module.exports = defineConfig({
   // ONLINE
   publicPath: process.env.NODE_ENV === 'production' ? '/my_site/admin/c-panel/myCloud/' : '/',
   pwa: {
+    workboxOptions: {
+      skipWaiting: true
+    },
     name: 'myCloud',
     themeColor: '#0f172a',
     msTileColor: '#0f172a',

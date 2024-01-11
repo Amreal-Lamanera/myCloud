@@ -1,26 +1,32 @@
 <template>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 items-center gap-4 p-4" v-if="responseData !== null">
-      <div class="relative" v-for="(src, key) in responseData" :key="key">
+      <div class="relative h-full flex items-center" v-for="(src, key) in responseData" :key="key">
         <img
           loading="lazy"
           title="Click per download" 
-          class="cursor-pointer"  
+          class="max-w-full max-h-full"
           :src="imgs_dir + src"
           alt="" 
           @mouseover="showKey = key"
           @mouseout="showKey = null"
         >
         <div 
-          class="layover" 
+          class="layover flex gap-4"
           :class="showKey === key ? 'flex' : 'hidden'" 
           @mousemove="showKey = key" 
           @mouseleave="showKey = null"
-          @click="downloadImage(imgs_dir + src)"
         >
-          <input type="hidden" name="file" value="<?= $file ?>">
-          <input name="table" type="hidden" value="<?= $table ?>">
-          <div class="text-white font-bold cursor-pointer bg-blue-900 border-white border-2 p-3">
-              CLICK PER DOWNLOAD
+          <div
+              class="text-white font-bold cursor-pointer bg-blue-900 border-white border-2 p-3 uppercase"
+              @click="downloadImage(imgs_dir + src)"
+          >
+              download
+          </div>
+          <div
+              class="text-white font-bold cursor-pointer bg-red-900 border-white border-2 p-3 uppercase"
+              @click="deleteFile(src)"
+          >
+              elimina
           </div>
         </div>
       </div>
@@ -30,8 +36,8 @@
 <script>
   // @ is an alias to /src
   import axios from 'axios';
-  import { API_GETIMGS_URL, API_CHECKLOGGED_URL, IMGS_DIR, AMBIENTE } from '/config.js';
-
+  // import { cacheAdapterEnhancer } from 'axios-extensions';
+  import { API_GETIMGS_URL, API_DELETEIMG_URL, API_CHECKLOGGED_URL, IMGS_DIR, AMBIENTE } from '/config.js';
 
   export default {
     name: 'HomeView',
@@ -76,6 +82,24 @@
         } catch (error) {
           console.error('Errore durante la chiamata API:', error);
         }
+      },
+      deleteFile(filename) {
+        const options = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        };
+
+        axios.post(API_DELETEIMG_URL, {
+          filename: filename,
+        }, options)
+        .then(function (response) {
+          console.log(response);
+          window.location.reload(true);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       },
       downloadImage(link) {
         const imageUrl = link;

@@ -33,7 +33,8 @@
 
 <script>
 
-  import { IMGS_DIR } from '/config.js';
+import {API_DELETEIMG_URL, IMGS_DIR} from '/config.js';
+import axios from "axios";
 
   export default {
     props: {
@@ -46,23 +47,26 @@
         showKey: null,
       };
     },
-    // computed: {
-    //   currentImage() {
-    //     return this.images[this.currentIndex];
-    //   }
-    // },
-    // methods: {
-    //   nextImage() {
-    //     if (this.currentIndex < this.images.length - 1) {
-    //       this.currentIndex++;
-    //     }
-    //   },
-    //   prevImage() {
-    //     if (this.currentIndex > 0) {
-    //       this.currentIndex--;
-    //     }
-    //   }
-    // },
+    methods: {
+      deleteFile(filename) {
+        const options = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        };
+
+        axios.post(API_DELETEIMG_URL, {
+          filename: filename,
+        }, options)
+        .then(function (response) {
+          console.log(response);
+          window.location.reload(true);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      },
+    },
     mounted() {
       this.imgs_dir = IMGS_DIR;
     },

@@ -14,7 +14,7 @@
             rounded-full
             font-bold
           "
-          @click="(pagina === 0) ? '': pagina--"
+          @click="(pagina === 0) ? '': handlerPagina('back')"
           :class="(pagina === 0) ? 'bg-gray-900' : 'bg-blue-600 hover:bg-blue-950'"
       >
         back
@@ -29,7 +29,7 @@
             rounded-full
             font-bold
           "
-          @click="((maxPerPagina * (pagina + 1)) > (srcImgsList.length - 1)) ? '' : pagina++"
+          @click="((maxPerPagina * (pagina + 1)) > (srcImgsList.length - 1)) ? '' : handlerPagina('next')"
           :class="((maxPerPagina * (pagina + 1)) > (srcImgsList.length - 1)) ? 'bg-gray-900' : 'bg-blue-600 hover:bg-blue-950'"
       >
         next
@@ -42,7 +42,7 @@
   // @ is an alias to /src
   import axios from 'axios';
   // import { cacheAdapterEnhancer } from 'axios-extensions';
-  import { API_GETIMGS_URL, API_DELETEIMG_URL, API_CHECKLOGGED_URL, AMBIENTE } from '/config.js';
+  import { API_GETIMGS_URL, API_CHECKLOGGED_URL, AMBIENTE } from '/config.js';
   import ImageGallery from '@/components/ImagesGallery.vue';
 
   export default {
@@ -103,24 +103,6 @@
           console.error('Errore durante la chiamata API:', error);
         }
       },
-      deleteFile(filename) {
-        const options = {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-        };
-
-        axios.post(API_DELETEIMG_URL, {
-          filename: filename,
-        }, options)
-        .then(function (response) {
-          console.log(response);
-          window.location.reload(true);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      },
       downloadImage(link) {
         const imageUrl = link;
         console.log(imageUrl);
@@ -162,6 +144,22 @@
         await this.checkLogged();
         this.fetchData();
       },
+      handlerPagina(operazione) {
+        if (operazione === 'next') {
+          this.pagina++;
+        } else if (operazione === 'back') {
+          this.pagina--;
+        }
+        this.scrollToTop();
+      },
+      scrollToTop() {
+        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (currentScroll > 0) {
+          window.requestAnimationFrame(this.scrollToTop);
+          window.scrollTo(0, currentScroll - currentScroll / 8);
+        }
+      }
     },
     mounted() {
       this.setDocumentTitle();

@@ -6,7 +6,7 @@
       </span>
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 items-center gap-4 p-4">
-      <image-gallery :images="srcs" />
+      <image-gallery :images="srcs" :pagina="pagina" />
     </div>
     <div class="flex gap-4 justify-center pt-6">
       <button
@@ -170,10 +170,15 @@
     mounted() {
       this.setDocumentTitle();
       this.loadData();
+    },
+    beforeMount() {
       if (this.$route.query.error) {
         this.error = this.$route.query.error;
       }
-    },
+      if (this.$route.query.pagina) {
+        this.pagina = this.$route.query.pagina;
+      }
+    }
   }
 </script>
 

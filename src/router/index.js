@@ -25,4 +25,21 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  // Controlla se la pagina sta usando HTTPS in un ambiente di produzione
+  if (window.location.protocol === 'http:' && process.env.NODE_ENV === 'production') {
+    // Forza il reindirizzamento a HTTPS
+    next({
+      path: to.path,
+      query: to.query,
+      hash: to.hash,
+      protocol: 'https:',
+      host: window.location.host,
+    });
+  } else {
+    // Continua la navigazione normale
+    next();
+  }
+});
+
 export default router

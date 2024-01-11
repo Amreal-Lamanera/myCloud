@@ -41,6 +41,7 @@ export default {
     path: String,
     filename: String,
     index: Number,
+    pagina: Number,
   },
   data() {
     return {
@@ -59,10 +60,24 @@ export default {
 
       axios.post(API_DELETEIMG_URL, {
         filename: filename,
+        pagina: this.pagina
       }, options)
           .then(function (response) {
             console.log(response);
-            window.location.reload(true);
+            console.log(response.data.pagina);
+            // window.location.reload(true);
+            if (response.data.pagina) {
+              // Aggiungere o modificare un parametro
+              let pagina = response.data.pagina;
+              let queryString = `?pagina=${pagina}`;
+
+              // Aggiornare l'URL con il nuovo parametro
+              history.replaceState({}, document.title, window.location.pathname + queryString);
+              window.location.reload(true);
+            } else {
+              // Ricaricare la pagina ignorando la cache
+              window.location.reload(true);
+            }
           })
           .catch(function (error) {
             console.log(error);

@@ -10,7 +10,7 @@
         :key="key
       "
   >
-    <image-container :path="imgs_dir + src" :filename="src" :index="key" />
+    <image-container :path="imgs_dir + src" :filename="src" :index="key" :pagina="pagina" />
   </div>
 </template>
 
@@ -23,7 +23,8 @@ import ImageContainer from "@/components/ImageContainer";
   export default {
     components: {ImageContainer},
     props: {
-      images: Array
+      images: Array,
+      pagina: Number
     },
     data() {
       return {

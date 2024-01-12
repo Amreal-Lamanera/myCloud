@@ -5,7 +5,7 @@ module.exports = defineConfig({
   // LOCALE
   // publicPath: process.env.NODE_ENV === 'production' ? '/admin/c-panel/myCloud/' : '/',
   // ONLINE
-  publicPath: process.env.NODE_ENV === 'production' ? '/my_site/admin/c-panel/myCloud/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? 'https://www.francescopieraccini.it/my_site/admin/c-panel/myCloud/' : '/',
   pwa: {
     workboxOptions: {
       skipWaiting: true
@@ -23,14 +23,14 @@ module.exports = defineConfig({
     ],
     display: "standalone",
     iconPaths:
-        {
-          faviconSVG: '../../../src/img/loghi/favicon/favicon.svg',
-          favicon32: '../../../src/img/loghi/favicon/favicon-32x32.png',
-          favicon16: '../../../src/img/loghi/favicon/favicon-16x16.png',
-          appleTouchIcon: '../../../src/img/loghi/favicon/apple-touch-icon.png',
-          maskIcon: '../../../src/img/loghi/favicon/favicon.svg',
-          msTileImage: '../../../src/img/loghi/favicon/apple-touch-icon.png'
-        },
+    {
+      faviconSVG: '../../../src/img/loghi/favicon/favicon.svg',
+      favicon32: '../../../src/img/loghi/favicon/favicon-32x32.png',
+      favicon16: '../../../src/img/loghi/favicon/favicon-16x16.png',
+      appleTouchIcon: '../../../src/img/loghi/favicon/apple-touch-icon.png',
+      maskIcon: '../../../src/img/loghi/favicon/favicon.svg',
+      msTileImage: '../../../src/img/loghi/favicon/apple-touch-icon.png'
+    },
     manifestOptions: {
       icons: [
         {

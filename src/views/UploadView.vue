@@ -9,6 +9,19 @@
           type="file"
           multiple
         >
+        <p class="text-white pt-4">
+          Condividere con tutti la foto?
+        </p>
+        <div class="flex gap-6 justify-center">
+          <div class="flex gap-3">
+            <label class="text-white" for="forAllSi">Sì</label>
+            <input type="radio" name="forAll" id="forAllSi" value="si" required>
+          </div>
+          <div class="flex gap-3">
+            <label class="text-white" for="forAllNo">No</label>
+            <input type="radio" name="forAll" id="forAllNo" value="no" required>
+          </div>
+        </div>
         <div class="text-center">
           <input type="submit" value="CARICA" class="btn cursor-pointer text-white mt-2 bg-blue-600 p-3 border border-white rounded-full hover:bg-blue-950">
         </div>

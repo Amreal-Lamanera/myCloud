@@ -39,7 +39,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory('/my_site/admin/c-panel/myCloud/'),
+  history: createWebHistory('/my_site/myCloud/'),
   routes
 })
 

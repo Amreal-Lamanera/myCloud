@@ -1,5 +1,5 @@
 <template>
-    <footer class="text-white p-3">
+    <footer class="text-white flex justify-center">
         <div class="container md:flex justify-between items-center">
             <div class="copy text-xs text-center pb-3 lg:p-0 flex items-center justify-center">
                 Copyright &copy; 2022-2024

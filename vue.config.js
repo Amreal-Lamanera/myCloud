@@ -5,7 +5,7 @@ module.exports = defineConfig({
   // LOCALE
   // publicPath: process.env.NODE_ENV === 'production' ? '/admin/c-panel/myCloud/' : '/',
   // ONLINE
-  publicPath: process.env.NODE_ENV === 'production' ? 'https://www.francescopieraccini.it/my_site/admin/c-panel/myCloud/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? 'https://www.francescopieraccini.it/my_site/myCloud/' : '/',
   pwa: {
     workboxOptions: {
       skipWaiting: true

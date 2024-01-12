@@ -24,12 +24,12 @@ module.exports = defineConfig({
     display: "standalone",
     iconPaths:
     {
-      faviconSVG: '../../../src/img/loghi/favicon/favicon.svg',
-      favicon32: '../../../src/img/loghi/favicon/favicon-32x32.png',
-      favicon16: '../../../src/img/loghi/favicon/favicon-16x16.png',
-      appleTouchIcon: '../../../src/img/loghi/favicon/apple-touch-icon.png',
-      maskIcon: '../../../src/img/loghi/favicon/favicon.svg',
-      msTileImage: '../../../src/img/loghi/favicon/apple-touch-icon.png'
+      faviconSVG: '../src/img/loghi/favicon/favicon.svg',
+      favicon32: '../src/img/loghi/favicon/favicon-32x32.png',
+      favicon16: '../src/img/loghi/favicon/favicon-16x16.png',
+      appleTouchIcon: '../src/img/loghi/favicon/apple-touch-icon.png',
+      maskIcon: '../src/img/loghi/favicon/favicon.svg',
+      msTileImage: '../src/img/loghi/favicon/apple-touch-icon.png'
     },
     manifestOptions: {
       icons: [
@@ -40,6 +40,7 @@ module.exports = defineConfig({
         },
         {
           src: '/my_site/src/img/loghi/favicon/favicon.svg',
+          sizes: '1000x1000',
           type: 'image/svg+xml',
         },
         {

@@ -143,6 +143,7 @@
     },
     watch: {
       $route() {
+        this.pagina = 0;
         this.loadData();
       },
     },

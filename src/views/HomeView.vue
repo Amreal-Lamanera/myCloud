@@ -66,6 +66,11 @@ import { API_INSERTIMG_URL } from '/config.js';
       document.title = 'myCloud - Upload';
       this.insert_url = API_INSERTIMG_URL;
     },
+    beforeMount() {
+      if (this.$route.query.redirect) {
+        this.$router.replace({ name: this.$route.query.redirect });
+      }
+    }
   }
 </script>
 

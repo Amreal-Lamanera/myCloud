@@ -1,19 +1,58 @@
 <template>
   <div v-if="logged" class="min-h-screen flex flex-col">
     <nav>
-      <router-link to="/">Le foto di: {{ username }}</router-link> |
-      <span v-if="superuser"><router-link :to="{ name: 'all', params: { superuser: superuser }}">Tutte le foto</router-link> | </span>
-      <router-link :to="{ name: 'public', params: { forAll: true }}">Foto pubbliche</router-link> |
-      <router-link to="/upload">Upload</router-link> |
-      <a href="../">francescopieraccini.it</a> |
-      <a :href="logout_url">Logout</a> |
-      <a v-if="superuser" :href="cpanel_url">C-panel</a>
+      <router-link :to="{ name: 'home'}">
+        Homepage
+      </router-link> |
+      <router-link :to="{ name: 'LeTueFoto'}">
+        Le foto di: {{ username }}
+      </router-link> |
+      <span v-if="superuser">
+        <router-link :to="{ name: 'all'}">
+          Tutte le foto
+        </router-link> |
+      </span>
+      <router-link :to="{ name: 'public'}">
+        Foto pubbliche
+      </router-link> |
+      <router-link to="/upload">
+        Upload
+      </router-link> |
+      <a href="../" title="Vai alla homepage di francescopieraccini.it">
+        francescopieraccini.it
+      </a> |
+      <a href="#" title="Effettua il logout" @click="logout" class="cursor-pointer">
+        Logout
+      </a>
+      <span v-if="superuser">
+        |
+        <a v-if="superuser" :href="cpanel_url" title="Vai al pannello di controllo">
+          C-panel
+        </a>
+      </span>
     </nav>
-    <router-view v-slot="slotProps" class="grow">
-      <transition name="fade" mode="out-in">
-        <component :is="slotProps.Component" :username="username" />
-      </transition>
-    </router-view>
+    <main class="grow">
+      <div v-if="errorMsg" class="p-4">
+        <span 
+          class="
+            text-xl 
+            text-red-500 
+            bg-gray-200 
+            p-3 
+            border-4 
+            border-red-500
+            flex
+          "
+        >
+            {{ errorMsg}}
+          </span>
+      </div>
+      <router-view v-slot="slotProps">
+        <transition name="fade" mode="out-in">
+          <component :is="slotProps.Component" />
+        </transition>
+      </router-view>
+    </main>
     <main-footer />
   </div>
 </template>
@@ -31,23 +70,17 @@
     data() {
       return {
         cpanel_url: CPANEL_URL,
-        logout_url: API_LOGOUT_URL,
+        errorMsg: ''
       }
     },
     computed: {
       logged() {
-        console.log('**** STATE ****');
-        console.log(Store.state.logged);
         return Store.state.logged;
       },
       superuser() {
-        console.log('**** STATE ****');
-        console.log(Store.state.superuser);
         return Store.state.superuser;
       },
       username() {
-        console.log('**** STATE ****');
-        console.log(Store.state.username);
         return Store.state.username;
       },
     },
@@ -56,25 +89,38 @@
         try {
           // Esegui la chiamata API utilizzando axios
           const response = await axios.get(API_CHECKLOGGED_URL);
-          console.log(response);
+          // console.log(response);
 
-            if (!response.data.logged) {
-              window.location.href = '../login/login.php';
-            } else {
-              Store.commit('setLogged', true);
-              Store.commit('setUsername', response.data.username);
-              if (response.data.superuser == true) {
-                Store.commit('setSuperuser', true);
-              }
+          if (!response.data.logged) {
+            window.location.href = '../login/login.php';
+          } else {
+            Store.commit('setLogged', true);
+            Store.commit('setUsername', response.data.username);
+            if (response.data.superuser == true) {
+              Store.commit('setSuperuser', true);
             }
+          }
         } catch (error) {
-          console.error('Errore durante la chiamata API:', error);
+          this.errorMsg = 'Si è verificato un errore, contattare l\'amministratore. Errore: ' + error;
+        }
+      },
+      async logout() {
+        try {
+          // Esegui la chiamata API per il logout
+          const response = await axios.get(API_LOGOUT_URL);
+
+          if(response.data) {
+            window.location.href = '../login/login.php';
+          } else {
+            this.errorMsg = "Qualcosa è andato storto! Contattare l'amministratore";
+          }
+        } catch (error) {
+          this.errorMsg = 'Si è verificato un errore, contattare l\'amministratore. Errore: ' + error;
         }
       },
     },
     async beforeMount() {
       await this.checkLogged();
-      console.log(process.env.BASE_URL)
     },
   }
 
@@ -96,7 +142,7 @@ nav {
     font-weight: bold;
     color: #2c3e50;
 
-    &.router-link-exact-active {
+    &:hover, &.router-link-exact-active {
       color: #42b983;
     }
   }

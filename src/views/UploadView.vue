@@ -10,7 +10,7 @@
           multiple
         >
         <p class="text-white pt-4">
-          Condividere con tutti la foto?
+          Vuoi rendere la foto publica?
         </p>
         <div class="flex gap-6 justify-center">
           <div class="flex gap-3">

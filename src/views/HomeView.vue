@@ -1,182 +1,100 @@
 <template>
-  <div class="py-6">
-    <div v-if="error" class="pb-6">
-      <span class="text-xl text-red-500 bg-gray-200 p-3 border-4 border-red-500">
-        {{ error}}
-      </span>
-    </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 items-center gap-4 p-4">
-      <image-gallery :images="srcs" :pagina="pagina" />
-    </div>
-    <div class="flex gap-4 justify-center pt-6">
-      <button
-          class="
-            btn
-            text-white
-            p-3
-            border-4
-            border-white
-            rounded-full
-            font-bold
-          "
-          @click="(pagina === 0) ? '': handlerPagina('back')"
-          :class="(pagina === 0) ? 'bg-gray-900' : 'bg-blue-600 hover:bg-blue-950'"
-      >
-        back
-      </button>
-      <button
-          class="
-            btn
-            text-white
-            p-3
-            border-4
-            border-white
-            rounded-full
-            font-bold
-          "
-          @click="((maxPerPagina * (pagina + 1)) > (srcImgsList.length - 1)) ? '' : handlerPagina('next')"
-          :class="((maxPerPagina * (pagina + 1)) > (srcImgsList.length - 1)) ? 'bg-gray-900' : 'bg-blue-600 hover:bg-blue-950'"
-      >
-        next
-      </button>
-    </div>
-  </div>
+  <section class="container flex flex-col justify-center items-center text-white mx-auto py-16" id="header-section">
+            <div class="flex items-center">
+                <h1 class="text-7xl sm:text-9xl">
+                    CIAO!
+                </h1>
+                <span class="text-7xl sm:text-9xl saluta">&#9995;</span>
+            </div>
+            <div class="pt-12">
+                <h2 class="text-3xl sm:text-5xl text-center">
+                    <span>Benvenutǝ nel progetto "myCloud"</span>
+                </h2>
+            </div>
+            <div class="pt-12">
+                <p class="text-center text-xl pb-16">
+                  E' ancora in fase di <strong class="text-red-600">test</strong> per cui si potrebbero verificare degli errori. Se dovesse succedere ti sarei gratǝ se mi <a href="../contactMe.php" class="text-purple-600 hover:underline hover:text-purple-400">contattassi</a> per segnalare il problema! 🙏🏻 <br>
+                  Inoltre questo progetto subirà spesso variazioni per cui potrebbe essere necessario cancellare i dati di navigazione in caso di blocco.<br><br>
+                  In ogni caso, naviga pure in libertà, puoi provare tutto senza timore, ma ti consiglio di non caricare foto compromettenti perché io vedo tutto! 👀 E se usi un <strong class="text-red-600"> "ProfiloPubblico" </strong> ovviamente anche altri utenti vedranno le tue foto come se fossero loro.
+                </p>
+                <h2 class="text-5xl sm:text-7xl pb-6">
+                  Come funziona?
+                </h2>
+                <p class="text-left pb-2">
+                  Naviga tra le pagine tramite il menù di navigazione in alto e potrai trovare:
+                </p>
+                <ul class="list-disc text-left">
+                  <li>
+                    <strong style="color: #42b983;"> Homepage </strong> - questa pagina.
+                  </li>
+                  <li>
+                    <strong style="color: #42b983;"> Le foto di: {{ username }} </strong> - la galleria delle foto private caricate con questa username.
+                  </li>
+                  <li>
+                    <strong style="color: #42b983;"> Foto pubbliche </strong> - tutte le foto che gli utenti hanno caricato come pubbliche.
+                  </li>
+                  <li>
+                    <strong style="color: #42b983;"> Upload </strong> - la sezione dove poter caricare le foto.
+                  </li>
+                  <li>
+                    <strong style="color: #42b983;"> francescopieraccini.it </strong> - il collegamento alla homepage del mio sito.
+                  </li>
+                  <li>
+                    <strong style="color: #42b983;"> Logout </strong> - da cliccare per effettuare logout.
+                  </li>
+                </ul>
+            </div>
+        </section>
 </template>
 
 <script>
-  // @ is an alias to /src
-  import axios from 'axios';
-  // import { cacheAdapterEnhancer } from 'axios-extensions';
-  import { API_GETIMGS_URL } from '/config.js';
-  import ImageGallery from '@/components/ImagesGallery.vue';
+import Store from '@/store/index';
+import { API_INSERTIMG_URL } from '/config.js';
 
   export default {
-    name: 'HomeView',
-    components: {
-      ImageGallery
-    },
-    props: {
-      username: String,
-      superuser: String,
-      forAll: Boolean,
-    },
     data() {
       return {
-        srcImgsList: [],
-        maxPerPagina: 12,
-        pagina: 0,
-        error: null
-      };
+        insert_url: null,
+      }
     },
     computed: {
-      srcs() {
-        let array = [];
-        for (let i = (this.maxPerPagina * this.pagina); i < (this.maxPerPagina * (this.pagina + 1)); i++) {
-          console.log(i);
-          if (!this.srcImgsList[i]) {
-            break;
-          }
-          array.push(this.srcImgsList[i]);
-        }
-        console.log(array);
-        console.log(this.pagina);
-        return array;
-      },
-    },
-    methods: {
-      // Funzione per effettuare la chiamata API
-      async fetchData() {
-        try {
-          console.log('SUPER: ' + this.superuser);
-          const options = {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            },
-          };
-          let queryString = '';
-          if (this.superuser === 'true') {
-            queryString = '?username=superuser';
-            console.log(queryString);
-          } else if (this.forAll) {
-            queryString = '?username=all';
-            console.log(queryString);
-          } else {
-            queryString = '?username=' + this.username;
-            console.log(queryString);
-          }
-          // Esegui la chiamata API utilizzando axios
-          const response = await axios.get(API_GETIMGS_URL + queryString, options);
-          console.log(response);
-          
-          // Salva i dati ottenuti dalla chiamata nell'oggetto 'srcImgsList'
-          this.srcImgsList = response.data;
-          console.log(this.srcImgsList);
-        } catch (error) {
-          console.error('Errore durante la chiamata API:', error);
-        }
-      },
-      setDocumentTitle() {
-        document.title = 'myCloud - Home';
-      },
-
-      async loadData() {
-        this.srcImgsList = [];
-        this.fetchData();
-      },
-      handlerPagina(operazione) {
-        if (operazione === 'next') {
-          this.pagina++;
-        } else if (operazione === 'back') {
-          this.pagina--;
-        }
-        this.scrollToTop();
-      },
-      scrollToTop() {
-        const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-
-        if (currentScroll > 0) {
-          window.requestAnimationFrame(this.scrollToTop);
-          window.scrollTo(0, currentScroll - currentScroll / 8);
-        }
+      username() {
+        return Store.state.username;
       }
-    },
-    watch: {
-      $route() {
-        this.pagina = 0;
-        this.loadData();
-      },
     },
     mounted() {
-      console.log("mounted");
-      console.log(this.superuser);
-      console.log(this.forAll);
-      this.setDocumentTitle();
-      this.loadData();
+      document.title = 'myCloud - Upload';
+      this.insert_url = API_INSERTIMG_URL;
     },
-    beforeMount() {
-      if (this.$route.query.error) {
-        this.error = this.$route.query.error;
-      }
-      if (this.$route.query.pagina) {
-        this.pagina = this.$route.query.pagina;
-      }
-    }
   }
 </script>
 
-<style lang="scss">
+<style>
+  .saluta {
+      animation:
+          saluta 1.5s linear 0s forwards 2;
 
-  .layover {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: 10000;
-      /* display: flex; */
-      align-items: center;
-      justify-content: center;
   }
 
+  @keyframes saluta {
+      0% {
+          transform: rotate(-60deg);
+      }
+
+      25% {
+          transform: rotate(0deg);
+      }
+
+      50% {
+          transform: rotate(-60deg);
+      }
+
+      75% {
+          transform: rotate(0deg);
+      }
+
+      100% {
+          transform: rotate(-60deg);
+      }
+  }
 </style>

@@ -44,8 +44,7 @@ import ImageContainer from "@/components/ImageContainer";
         axios.post(API_DELETEIMG_URL, {
           filename: filename,
         }, options)
-        .then(function (response) {
-          console.log(response);
+        .then(function () {
           window.location.reload(true);
         })
         .catch(function (error) {

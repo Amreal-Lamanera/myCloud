@@ -67,8 +67,6 @@ export default {
         error: imageError,
       }, options)
           .then(function (response) {
-            console.log(response);
-            console.log(response.data.pagina);
             // window.location.reload(true);
             if (response.data.pagina) {
               // Aggiungere o modificare un parametro

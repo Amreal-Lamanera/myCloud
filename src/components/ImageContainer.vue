@@ -66,7 +66,7 @@ export default {
         pagina: this.pagina,
         error: imageError,
       }, options)
-          .then(function (response) {
+          .then((response) => {
             // window.location.reload(true);
             if (response.data.pagina) {
               // Aggiungere o modificare un parametro
@@ -74,8 +74,9 @@ export default {
               let queryString = `?pagina=${pagina}`;
 
               // Aggiornare l'URL con il nuovo parametro
-              history.replaceState({}, document.title, window.location.pathname + queryString);
-              window.location.reload(true);
+              // history.replaceState({}, document.title, window.location.pathname + queryString);
+              // window.location.reload(true);
+              this.$router.push(queryString);
             } else if (response.data.status === 'KO') {
               // Aggiungere o modificare un parametro
               const error = response.data.message;

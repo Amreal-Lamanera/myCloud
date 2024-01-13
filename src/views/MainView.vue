@@ -148,6 +148,9 @@
     watch: {
       $route() {
         this.pagina = 0;
+        if (this.$route.query.pagina) {
+          this.pagina = Number(this.$route.query.pagina);
+        }
         this.loadData();
       },
     },

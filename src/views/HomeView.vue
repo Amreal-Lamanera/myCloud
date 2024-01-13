@@ -49,7 +49,6 @@
   // import { cacheAdapterEnhancer } from 'axios-extensions';
   import { API_GETIMGS_URL } from '/config.js';
   import ImageGallery from '@/components/ImagesGallery.vue';
-  // import Store from '@/store/index';
 
   export default {
     name: 'HomeView',

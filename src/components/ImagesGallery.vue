@@ -10,7 +10,7 @@
         :key="key
       "
   >
-    <image-container :path="imgs_dir + src" :filename="src" :index="key" :pagina="pagina" :forAll="forAll" />
+    <image-container :path="imgs_dir + src" :filename="src" :index="key" :pagina="pagina" />
   </div>
 </template>
 

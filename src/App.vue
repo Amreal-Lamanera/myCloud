@@ -6,6 +6,7 @@
       <router-link :to="{ name: 'public', params: { forAll: true }}">Foto pubbliche</router-link> |
       <router-link to="/upload">Upload</router-link> |
       <a href="../">francescopieraccini.it</a> |
+      <a :href="logout_url">Logout</a> |
       <a v-if="superuser" :href="cpanel_url">C-panel</a>
     </nav>
     <router-view v-slot="slotProps" class="grow">
@@ -21,7 +22,7 @@
   import axios from 'axios';
   import Store from '@/store/index';
   import MainFooter from '@/components/MainFooter';
-  import { API_CHECKLOGGED_URL, CPANEL_URL } from '/config.js';
+  import { API_CHECKLOGGED_URL, CPANEL_URL, API_LOGOUT_URL } from '/config.js';
 
   export default {
     components: {
@@ -29,7 +30,8 @@
     },
     data() {
       return {
-        cpanel_url: CPANEL_URL
+        cpanel_url: CPANEL_URL,
+        logout_url: API_LOGOUT_URL,
       }
     },
     computed: {
@@ -59,20 +61,20 @@
             if (!response.data.logged) {
               window.location.href = '../login/login.php';
             } else {
-              Store.state.logged = true;
-              Store.state.username = response.data.username;
+              Store.commit('setLogged', true);
+              Store.commit('setUsername', response.data.username);
               if (response.data.superuser == true) {
-                Store.state.superuser = true;
+                Store.commit('setSuperuser', true);
               }
             }
-          Store.state.logged = true;
         } catch (error) {
           console.error('Errore durante la chiamata API:', error);
         }
       },
     },
-    mounted() {
-      this.checkLogged();
+    async beforeMount() {
+      await this.checkLogged();
+      console.log(process.env.BASE_URL)
     },
   }
 

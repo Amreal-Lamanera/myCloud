@@ -134,6 +134,12 @@ export default {
       this.imageLoaded = false;
       this.imageError = false;
     },
+    pagina() {
+      this.currentIndex = 0;
+      this.showKey = null;
+      this.imageLoaded = false;
+      this.imageError = false;
+    },
   },
   mounted() {
   },

@@ -67,6 +67,10 @@ import { API_INSERTIMG_URL } from '/config.js';
       this.insert_url = API_INSERTIMG_URL;
     },
     beforeMount() {
+      if (this.$route.query.error) {
+        console.log(this.$route.query.error);
+        Store.commit('setError', this.$route.query.error);
+      }
       if (this.$route.query.redirect) {
         this.$router.replace({ name: this.$route.query.redirect });
       }

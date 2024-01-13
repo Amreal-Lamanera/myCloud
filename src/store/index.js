@@ -5,6 +5,7 @@ export default createStore({
     logged: false,
     superuser: false,
     username: '',
+    error: '',
   },
   getters: {
   },
@@ -17,7 +18,10 @@ export default createStore({
     },
     setUsername(state, value) {
       state.username = value;
-    }
+    },
+    setError(state, value) {
+      state.error = value;
+    },
   },
   actions: {
   },

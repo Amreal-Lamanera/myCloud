@@ -1,20 +1,6 @@
 <template>
   <section class="py-6">
-    <div v-if="errorMsg" class="pb-6">
-      <span 
-        class="
-          text-xl 
-          text-red-500 
-          bg-gray-200 
-          p-3 
-          border-4 
-          border-red-500
-          flex
-        "
-      >
-        {{ errorMsg}}
-      </span>
-    </div>
+    <error-component :errorMsg="errorMsg" />
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 items-center gap-4 p-4">
       <image-gallery :images="srcs" :pagina="pagina" />
     </div>
@@ -57,13 +43,15 @@
   // @ is an alias to /src
   import axios from 'axios';
   import { API_GETIMGS_URL } from '/config.js';
-  import ImageGallery from '@/components/ImagesGallery.vue';
   import Store from '@/store/index';
+  import ImageGallery from '@/components/ImagesGallery';
+  import ErrorComponent from '@/components/ErrorComponent';
 
   export default {
     name: 'HomeView',
     components: {
-      ImageGallery
+      ImageGallery,
+      ErrorComponent,
     },
     props: {
     },
@@ -72,7 +60,7 @@
         srcImgsList: [],
         maxPerPagina: 12,
         pagina: 0,
-        errorMsg: ''
+        errorMsg: '',
       };
     },
     computed: {
@@ -84,13 +72,13 @@
           }
           array.push(this.srcImgsList[i]);
         }
+        console.log(array);
         return array;
       },
     },
     methods: {
       // Funzione per effettuare la chiamata API
       async fetchData() {
-        console.log(this.$route.name)
         try {
           const options = {
             headers: {
@@ -168,11 +156,12 @@
       this.loadData();
     },
     beforeMount() {
-      if (this.$route.query.error) {
-        this.errorMsg = this.$route.query.error;
+      if (Store.state.error) {
+        this.errorMsg = Store.state.error;
+        Store.commit('setError', '');
       }
       if (this.$route.query.pagina) {
-        this.pagina = this.$route.query.pagina;
+        this.pagina = Number(this.$route.query.pagina);
       }
     }
   }

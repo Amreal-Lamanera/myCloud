@@ -11,7 +11,7 @@
     </main>
     <main-footer />
   </div>
-  <div class="pageLoading hidden" ref="pageLoading" id="mainLoading">
+  <div class="pageLoading" ref="pageLoading" id="mainLoading" v-if="loading">
     <img :src="require('@/assets/img/loading.gif')" alt="" width="200">
   </div>
 </template>
@@ -38,6 +38,9 @@
     computed: {
       logged() {
           return Store.state.logged;
+      },
+      loading() {
+          return Store.state.loading;
       },
     },
     methods: {

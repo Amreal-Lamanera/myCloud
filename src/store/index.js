@@ -8,6 +8,7 @@ export default createStore({
     error: '',
     page: 0,
     redirect: '',
+    loading: true,
   },
   getters: {
   },
@@ -29,6 +30,9 @@ export default createStore({
     },
     setRedirect(state, value) {
       state.redirect = value;
+    },
+    setLoading(state, value) {
+      state.loading = value;
     },
   },
   actions: {

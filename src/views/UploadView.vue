@@ -31,20 +31,17 @@
         </div>
       </form>
     </div>
-    <div class="pageLoading" v-if="loading">
-        <img :src="require('@/assets/img/loading.gif')" alt="" width="200">
-    </div>
   </section>
 </template>
 
 <script>
+import Store from '@/store/index';
 import { API_INSERTIMG_URL } from '/config.js';
 
   export default {
     data() {
       return {
         insert_url: API_INSERTIMG_URL,
-        loading: false,
       }
     },
     methods: {
@@ -58,11 +55,12 @@ import { API_INSERTIMG_URL } from '/config.js';
           filesError.classList.remove('hidden');
           return;
         }
-        this.loading = true;
+        Store.commit('setLoading', true);
         form.submit();
       },
     },
     mounted() {
+      Store.commit('setLoading', false);
       document.title = 'myCloud - Upload';
     },
   }

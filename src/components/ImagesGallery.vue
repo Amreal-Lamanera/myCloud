@@ -6,7 +6,7 @@
         flex
         items-center
         justify-center"
-        v-for="(src, key) in images"
+        v-for="(src, key) in path"
         :key="key
       "
   >
@@ -26,15 +26,25 @@ import ImageContainer from "@/components/ImageContainer";
       images: Array,
       pagina: Number,
     },
+    computed: {
+      path() {
+        const paths = [];
+        // ciclo l'array images contenente oggetti così composti: {filename, username} per creare i path:
+        // IMGS_DIR (percorso alla cartella cloudImgs dentro a myCloud) + username/ (sottocartella) + filename (filename immagine)
+        this.images.forEach(element => {
+          paths.push(`${element.username}/${element.filename}`);
+        });
+        return paths;
+      },
+    },
     data() {
       return {
         currentIndex: 0,
-        imgs_dir: null,
         showKey: null,
+        imgs_dir: IMGS_DIR
       };
     },
     mounted() {
-      this.imgs_dir = IMGS_DIR;
     },
   };
 

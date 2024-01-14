@@ -113,9 +113,13 @@
           // Esegui la chiamata API utilizzando axios
           const response = await axios.get(API_GETIMGS_URL + queryString, options);
           
-          // Salva i dati ottenuti dalla chiamata nell'oggetto 'srcImgsList'
-          this.srcImgsList = response.data;
-          // console.log(this.srcImgsList);
+          // Salva i dati ottenuti dalla chiamata nell'array 'srcImgsList' creando un oggetto {filename, username}
+          response.data.forEach(element => {
+            this.srcImgsList.push({
+              filename: element.filename,
+              username: element.username,
+            });
+          });
         } catch (error) {
           this.errorMsg = 'Si è verificato un errore, contattare l\'amministratore. Errore: ' + error;
         }
@@ -156,6 +160,7 @@
       },
     },
     mounted() {
+      Store.commit('setLoading', false);
       this.setDocumentTitle();
       this.loadData();
       this.pagina = Number(Store.state.page);

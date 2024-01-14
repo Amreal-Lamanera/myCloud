@@ -12,14 +12,13 @@ import Store from '@/store/index';
       document.title = 'myCloud';
     },
     beforeMount() {
-        document.getElementById('mainLoading').classList.add('hidden');
-        if (Store.state.redirect) {
+      if (Store.state.redirect) {
         const redirect = Store.state.redirect;
         Store.commit('setRedirect', '');
         this.$router.replace({ name: redirect });
-        } else {
+      } else {
         this.$router.replace({ name: 'home' });
-        }
+      }
 
     }
   }

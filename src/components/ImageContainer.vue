@@ -54,7 +54,8 @@ export default {
   },
   methods: {
     deleteFile(filename, imageError = false) {
-      document.getElementById('mainLoading').classList.remove('hidden');
+      Store.commit('setLoading', true);
+
       const options = {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -80,12 +81,11 @@ export default {
               this.$router.replace('blankPage');
             } else if (response.data.status === 'KO') {
               // Aggiungere o modificare un parametro
-              const error = response.data.message;
-              let queryString = `?error=${error}`;
+              Store.commit('setError', response.data.message);
               Store.commit('setRedirect', this.$route.name);
 
               // Aggiornare l'URL con il nuovo parametro
-              this.$router.replace('/' + queryString);
+              this.$router.replace('blankPage');
             } else {
               // Ricaricare la pagina ignorando la cache
               window.location.reload(true);

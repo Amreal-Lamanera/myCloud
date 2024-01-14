@@ -72,7 +72,7 @@
           }
           array.push(this.srcImgsList[i]);
         }
-        console.log(array);
+        // console.log(array);
         return array;
       },
     },
@@ -115,7 +115,7 @@
           
           // Salva i dati ottenuti dalla chiamata nell'oggetto 'srcImgsList'
           this.srcImgsList = response.data;
-          console.log(this.srcImgsList);
+          // console.log(this.srcImgsList);
         } catch (error) {
           this.errorMsg = 'Si è verificato un errore, contattare l\'amministratore. Errore: ' + error;
         }
@@ -148,6 +148,7 @@
     watch: {
       $route() {
         this.pagina = 0;
+        this.errorMsg = '';
         if (this.$route.query.pagina) {
           this.pagina = Number(this.$route.query.pagina);
         }
@@ -157,6 +158,8 @@
     mounted() {
       this.setDocumentTitle();
       this.loadData();
+      this.pagina = Number(Store.state.page);
+      Store.commit('setPage', 0);
     },
     beforeMount() {
       if (Store.state.error) {

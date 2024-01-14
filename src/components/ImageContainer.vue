@@ -9,7 +9,7 @@
         @load="imageLoaded = true"
         @error="imageError = true"
     >
-    <img v-if="!imageLoaded && !imageError" :src="require('@/assets/img/loading.gif')" alt="Loading img">
+    <img v-if="!imageLoaded && !imageError" :src="require('@/assets/img/classicLoading.gif')" alt="Loading img">
     <img v-if="imageError" :src="require('@/assets/img/notFound.png')" alt="Loading img" @mouseover="showKey = index">
     <div
         class="layover flex gap-4"
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-
+import Store from '@/store/index';
 import {API_DELETEIMG_URL } from '/config.js';
 import axios from "axios";
 
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     deleteFile(filename, imageError = false) {
-      console.log(filename);
+      document.getElementById('mainLoading').classList.remove('hidden');
       const options = {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -71,20 +71,21 @@ export default {
             if (response.data.pagina) {
               // Aggiungere o modificare un parametro
               let pagina = response.data.pagina;
-              let queryString = `?pagina=${pagina}`;
 
               // Aggiornare l'URL con il nuovo parametro
               // history.replaceState({}, document.title, window.location.pathname + queryString);
+              Store.commit('setPage', pagina);
+              Store.commit('setRedirect', this.$route.name);
               // window.location.reload(true);
-              this.$router.push(queryString);
+              this.$router.replace('blankPage');
             } else if (response.data.status === 'KO') {
               // Aggiungere o modificare un parametro
               const error = response.data.message;
               let queryString = `?error=${error}`;
+              Store.commit('setRedirect', this.$route.name);
 
               // Aggiornare l'URL con il nuovo parametro
-              history.replaceState({}, document.title, window.location.pathname + queryString);
-              window.location.reload(true);
+              this.$router.replace('/' + queryString);
             } else {
               // Ricaricare la pagina ignorando la cache
               window.location.reload(true);

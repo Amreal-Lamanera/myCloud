@@ -88,7 +88,6 @@ import { API_INSERTIMG_URL } from '/config.js';
     },
     beforeMount() {
       if (this.$route.query.error) {
-        console.log(this.$route.query.error);
         Store.commit('setError', this.$route.query.error);
       }
       if (this.$route.query.redirect) {
@@ -98,7 +97,8 @@ import { API_INSERTIMG_URL } from '/config.js';
   }
 </script>
 
-<style>
+<style scoped>
+
   .saluta {
       animation:
           saluta 1.5s linear 0s forwards 2;

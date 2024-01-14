@@ -12,6 +12,7 @@
   >
     <image-container :path="imgs_dir + src" :filename="src" :index="key" :pagina="pagina" />
   </div>
+
 </template>
 
 <script>

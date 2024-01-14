@@ -6,6 +6,8 @@ export default createStore({
     superuser: false,
     username: '',
     error: '',
+    page: 0,
+    redirect: '',
   },
   getters: {
   },
@@ -21,6 +23,12 @@ export default createStore({
     },
     setError(state, value) {
       state.error = value;
+    },
+    setPage(state, value) {
+      state.page = value;
+    },
+    setRedirect(state, value) {
+      state.redirect = value;
     },
   },
   actions: {

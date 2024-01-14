@@ -1,7 +1,7 @@
 <template>
   <div v-if="logged" class="min-h-screen flex flex-col">
     <main-nav />
-    <main class="grow">
+    <main class="grow pt-48 pb-16">
       <error-component :errorMsg="errorMsg" />
       <router-view v-slot="slotProps">
         <transition name="fade" mode="out-in">
@@ -72,19 +72,6 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-  }
-
-  nav {
-    padding: 30px;
-
-    a {
-      font-weight: bold;
-      color: #2c3e50;
-
-      &:hover, &.router-link-exact-active {
-        color: #42b983;
-      }
-    }
   }
 
   .fade-enter-from,

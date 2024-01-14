@@ -148,7 +148,21 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
+
+  .layover {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 2;
+      /* display: flex; */
+      align-items: center;
+      justify-content: center;
+  }
+
   .my_img {
     background-image: require("@/assets/img/loading.png");
   }

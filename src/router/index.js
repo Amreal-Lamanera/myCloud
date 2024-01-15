@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import BlankView from '../views/BlankView.vue'
 import MainView from '../views/MainView.vue'
 import UploadView from '../views/UploadView.vue'
+import Store from '@/store/index';
 
 const routes = [
   {
@@ -41,5 +42,11 @@ const router = createRouter({
   history: createWebHistory('/my_site/myCloud/'),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  // Aggiorna il componente dinamico nello store prima di ogni navigazione
+  Store.commit('incrementComponentKey');
+  next();
+});
 
 export default router

@@ -9,6 +9,7 @@ export default createStore({
     page: 0,
     redirect: '',
     loading: true,
+    componentKey: 0,
   },
   getters: {
   },
@@ -33,6 +34,9 @@ export default createStore({
     },
     setLoading(state, value) {
       state.loading = value;
+    },
+    incrementComponentKey(state) {
+      state.componentKey++;
     },
   },
   actions: {

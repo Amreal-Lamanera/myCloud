@@ -29,3 +29,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 2) Gestione delle immagini compresse da mostrare a schermo per evitare caricamenti infiniti con connessioni lente. (OK)
 3) Refactoring tabella utenze: cambio nome tabella, aggiunta colonna admin_cloud e deleted.
 4) Provare a implementare la registrazione con google o in alternativa farne una custom.
+5) Rivedere pagination: diventerà scomodo all'aumentare delle pagine (e quindi delle img nel cloud).

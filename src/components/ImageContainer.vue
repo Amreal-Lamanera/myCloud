@@ -1,8 +1,7 @@
 <template>
-<!--        loading="lazy"-->
     <img
         :class="!imageLoaded ? 'hidden' : ''"
-        class="max-w-full max-h-full my_img"
+        class="max-w-full max-h-72 my_img"
         :src="srcCompressed"
         alt=""
         @mouseover="showKey = index"
@@ -175,7 +174,4 @@ export default {
       justify-content: center;
   }
 
-  .my_img {
-    background-image: require("@/assets/img/loading.png");
-  }
 </style>

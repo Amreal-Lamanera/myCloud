@@ -5,7 +5,7 @@
       <error-component :errorMsg="errorMsg" />
       <router-view v-slot="slotProps">
         <transition name="fade" mode="out-in">
-          <component :is="slotProps.Component" />
+          <component :is="slotProps.Component" :key="componentKey" />
         </transition>
       </router-view>
     </main>
@@ -37,10 +37,14 @@
     },
     computed: {
       logged() {
-          return Store.state.logged;
+        return Store.state.logged;
       },
       loading() {
-          return Store.state.loading;
+        return Store.state.loading;
+      },
+      // triggera la transition anche se il componente è lo stesso
+      componentKey() {
+        return Store.state.componentKey;
       },
     },
     methods: {

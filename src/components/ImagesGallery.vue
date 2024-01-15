@@ -6,11 +6,11 @@
         flex
         items-center
         justify-center"
-        v-for="(src, key) in path"
+        v-for="(src, key) in images"
         :key="key
       "
   >
-    <image-container :path="imgs_dir + src" :filename="src" :index="key" :pagina="pagina" />
+    <image-container :image="src" :index="key" :pagina="pagina" />
   </div>
 
 </template>

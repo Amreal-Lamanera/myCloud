@@ -3,7 +3,7 @@
     <img
         :class="!imageLoaded ? 'hidden' : ''"
         class="max-w-full max-h-full my_img"
-        :src="path"
+        :src="srcCompressed"
         alt=""
         @mouseover="showKey = index"
         @load="imageLoaded = true"
@@ -19,7 +19,7 @@
     >
       <div
           class="text-white font-bold cursor-pointer bg-blue-500 border-white border-2 p-3 uppercase hover:bg-blue-950"
-          @click="downloadImage(path)"
+          @click="downloadImage(srcOriginal)"
       >
         download
       </div>
@@ -34,15 +34,26 @@
 
 <script>
 import Store from '@/store/index';
-import {API_DELETEIMG_URL } from '/config.js';
+import {API_DELETEIMG_URL, IMGS_DIR } from '/config.js';
 import axios from "axios";
 
 export default {
   props: {
-    path: String,
-    filename: String,
+    image: Object,
     index: Number,
     pagina: Number,
+  },
+  computed: {
+    srcCompressed() {
+      const compressed_filename = this.image.filename.split('.')[0];
+      return `${IMGS_DIR}${this.image.username}/compressed_${compressed_filename}.webp`;
+    },
+    srcOriginal() {
+      return `${IMGS_DIR}${this.image.username}/${this.image.filename}`;
+    },
+    filename() {
+      return `${this.image.username}/${this.image.filename}`;
+    }
   },
   data() {
     return {

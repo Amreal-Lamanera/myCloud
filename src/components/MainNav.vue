@@ -26,21 +26,21 @@
                         </a>
                         <div class="hidden xl:ml-6 xl:block">
                             <div class="flex space-x-4">
-                                <router-link :to="{ name: 'home'}">
+                                <router-link @click="pochita" :to="{ name: 'home'}">
                                     Homepage
                                 </router-link>
-                                <router-link :to="{ name: 'LeTueFoto'}">
+                                <router-link @click="pochita" :to="{ name: 'LeTueFoto'}">
                                     Le foto di: {{ username }}
                                 </router-link>
                                 <span v-if="superuser">
-                                    <router-link :to="{ name: 'all'}">
+                                    <router-link @click="pochita" :to="{ name: 'all'}">
                                     Tutte le foto
                                     </router-link>
                                 </span>
-                                <router-link :to="{ name: 'public'}">
+                                <router-link @click="pochita" :to="{ name: 'public'}">
                                     Foto pubbliche
                                 </router-link>
-                                <router-link to="/upload">
+                                <router-link @click="pochita" to="/upload">
                                     Upload
                                 </router-link>
                                 <a href="../" title="Vai alla homepage di francescopieraccini.it">
@@ -79,29 +79,29 @@
                         "
                     >
                         <li>
-                            <router-link :to="{ name: 'home'}">
+                            <router-link @click="pochita" :to="{ name: 'home'}">
                                 Homepage
                             </router-link>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'LeTueFoto'}">
+                            <router-link @click="pochita" :to="{ name: 'LeTueFoto'}">
                                 Le foto di: {{ username }}
                             </router-link>
                         </li>
                         <li>
                             <span v-if="superuser">
-                                <router-link :to="{ name: 'all'}">
+                                <router-link @click="pochita" :to="{ name: 'all'}">
                                     Tutte le foto
                                 </router-link>
                             </span>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'public'}">
+                            <router-link @click="pochita" :to="{ name: 'public'}">
                                 Foto pubbliche
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/upload">
+                            <router-link @click="pochita" to="/upload">
                                 Upload
                             </router-link>
                         </li>
@@ -179,8 +179,11 @@
                 if (menu && !menu.contains(event.target)) {
                 this.is_burger_open = false;
                 // Aggiungi il tuo codice di gestione qui
+                }
+            },
+            pochita() {
+                Store.commit('setLoading', true);
             }
-    },
         },
         mounted() {
             // Aggiungi un listener all'oggetto document

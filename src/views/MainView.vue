@@ -120,8 +120,10 @@
               username: element.username,
             });
           });
+          Store.commit('setLoading', false);
         } catch (error) {
           this.errorMsg = 'Si è verificato un errore, contattare l\'amministratore. Errore: ' + error;
+          Store.commit('setLoading', false);
         }
       },
       setDocumentTitle() {
@@ -160,7 +162,6 @@
       },
     },
     mounted() {
-      Store.commit('setLoading', false);
       this.setDocumentTitle();
       this.loadData();
       this.pagina = Number(Store.state.page);

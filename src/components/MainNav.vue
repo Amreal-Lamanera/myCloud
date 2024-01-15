@@ -26,21 +26,21 @@
                         </a>
                         <div class="hidden xl:ml-6 xl:block">
                             <div class="flex space-x-4">
-                                <router-link @click="pochita" :to="{ name: 'home'}">
+                                <router-link @click="pochita('home')" :to="{ name: 'home'}">
                                     Homepage
                                 </router-link>
-                                <router-link @click="pochita" :to="{ name: 'LeTueFoto'}">
+                                <router-link @click="pochita('LeTueFoto')" :to="{ name: 'LeTueFoto'}">
                                     Le foto di: {{ username }}
                                 </router-link>
                                 <span v-if="superuser">
-                                    <router-link @click="pochita" :to="{ name: 'all'}">
+                                    <router-link @click="pochita('all')" :to="{ name: 'all'}">
                                     Tutte le foto
                                     </router-link>
                                 </span>
-                                <router-link @click="pochita" :to="{ name: 'public'}">
+                                <router-link @click="pochita('public')" :to="{ name: 'public'}">
                                     Foto pubbliche
                                 </router-link>
-                                <router-link @click="pochita" to="/upload">
+                                <router-link @click="pochita('upload')" :to="{ name: 'upload'}">
                                     Upload
                                 </router-link>
                                 <a href="../" title="Vai alla homepage di francescopieraccini.it">
@@ -79,29 +79,29 @@
                         "
                     >
                         <li>
-                            <router-link @click="pochita" :to="{ name: 'home'}">
+                            <router-link @click="pochita('home')" :to="{ name: 'home'}">
                                 Homepage
                             </router-link>
                         </li>
                         <li>
-                            <router-link @click="pochita" :to="{ name: 'LeTueFoto'}">
+                            <router-link @click="pochita('LeTueFoto')" :to="{ name: 'LeTueFoto'}">
                                 Le foto di: {{ username }}
                             </router-link>
                         </li>
                         <li>
                             <span v-if="superuser">
-                                <router-link @click="pochita" :to="{ name: 'all'}">
+                                <router-link @click="pochita('all')" :to="{ name: 'all'}">
                                     Tutte le foto
                                 </router-link>
                             </span>
                         </li>
                         <li>
-                            <router-link @click="pochita" :to="{ name: 'public'}">
+                            <router-link @click="pochita('public')" :to="{ name: 'public'}">
                                 Foto pubbliche
                             </router-link>
                         </li>
                         <li>
-                            <router-link @click="pochita" to="/upload">
+                            <router-link @click="pochita('upload')" :to="{ name: 'upload'}">
                                 Upload
                             </router-link>
                         </li>
@@ -181,8 +181,10 @@
                 // Aggiungi il tuo codice di gestione qui
                 }
             },
-            pochita() {
-                Store.commit('setLoading', true);
+            pochita(page) {
+                if (page !== this.$route.name) {
+                  Store.commit('setLoading', true);
+                }
             }
         },
         mounted() {

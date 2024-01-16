@@ -42,6 +42,14 @@
     </footer>
 </template>
 
+<script>
+
+    export default {
+        name: 'MainFooter',
+    }
+
+</script>
+
 <style>
     footer {
         padding: 1rem 0;

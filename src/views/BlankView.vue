@@ -5,16 +5,15 @@
 </template>
 
 <script>
-import Store from '@/store/index';
 
   export default {
     mounted() {
       document.title = 'myCloud';
     },
     beforeMount() {
-      if (Store.state.redirect) {
-        const redirect = Store.state.redirect;
-        Store.commit('setRedirect', '');
+      if (this.$store.state.redirect) {
+        const redirect = this.$store.state.redirect;
+        this.$store.commit('setRedirect', '');
         this.$router.replace({ name: redirect });
       } else {
         this.$router.replace({ name: 'home' });

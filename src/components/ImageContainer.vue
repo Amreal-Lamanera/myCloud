@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import Store from '@/store/index';
 import {API_DELETEIMG_URL, IMGS_DIR } from '/config.js';
 import axios from "axios";
 
@@ -44,8 +43,10 @@ export default {
   },
   computed: {
     srcCompressed() {
-      const compressed_filename = this.image.filename.split('.')[0];
-      return `${IMGS_DIR}${this.image.username}/compressed_${compressed_filename}.webp`;
+      const compressed_filename = this.getCompressedFilename(this.image.filename);
+
+      // IMGS_DIR (percorso alla cartella cloudImgs dentro a myCloud) + username/ (sottocartella) + compressed_filename (compressed_filename.webp)
+      return `${IMGS_DIR}${this.image.username}/${compressed_filename}`;
     },
     srcOriginal() {
       return `${IMGS_DIR}${this.image.username}/${this.image.filename}`;
@@ -63,8 +64,30 @@ export default {
     };
   },
   methods: {
+    /**
+     * 
+     * Funzione per ottenere il filename dell'immagine
+     * compressa dal filename originale.
+     * Devo ciclare su filename.split al punto, in quanto l'immagine
+     * originale potrebbe avere dei "punti" nel nome, quindi ciclo fino
+     * all'ultimo elemento, a quel punto non lo aggiungo (sarà l'estensione)
+     * ritorno quello che ho ottenuto concatenando 'webp'
+     * 
+     * @param String filename
+     * 
+     */
+    getCompressedFilename(filename) {
+      const filenameArray = filename.split('.');
+      let compressed_filename = "compressed_";
+      filenameArray.forEach((element, key) => {
+        if (key !== filenameArray.length - 1) {
+          compressed_filename += `${element}.`;
+        }
+      });
+      return compressed_filename + 'webp';
+    },
     deleteFile(filename, imageError = false) {
-      Store.commit('setLoading', true);
+      this.$store.commit('setLoading', true);
 
       const options = {
         headers: {
@@ -85,14 +108,14 @@ export default {
 
               // Aggiornare l'URL con il nuovo parametro
               // history.replaceState({}, document.title, window.location.pathname + queryString);
-              Store.commit('setPage', pagina);
-              Store.commit('setRedirect', this.$route.name);
+              this.$store.commit('setPage', pagina);
+              this.$store.commit('setRedirect', this.$route.name);
               // window.location.reload(true);
               this.$router.replace('blankPage');
             } else if (response.data.status === 'KO') {
               // Aggiungere o modificare un parametro
-              Store.commit('setError', response.data.message);
-              Store.commit('setRedirect', this.$route.name);
+              this.$store.commit('setError', response.data.message);
+              this.$store.commit('setRedirect', this.$route.name);
 
               // Aggiornare l'URL con il nuovo parametro
               this.$router.replace('blankPage');

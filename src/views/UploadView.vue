@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import Store from '@/store/index';
 import { API_INSERTIMG_URL } from '/config.js';
 
   export default {
@@ -55,12 +54,12 @@ import { API_INSERTIMG_URL } from '/config.js';
           filesError.classList.remove('hidden');
           return;
         }
-        Store.commit('setLoading', true);
+        this.$store.commit('setLoading', true);
         form.submit();
       },
     },
     mounted() {
-      Store.commit('setLoading', false);
+      this.$store.commit('setLoading', false);
       document.title = 'myCloud - Upload';
     },
   }

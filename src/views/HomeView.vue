@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import Store from '@/store/index';
 import { API_INSERTIMG_URL } from '/config.js';
 
   export default {
@@ -79,25 +78,25 @@ import { API_INSERTIMG_URL } from '/config.js';
     },
     computed: {
       username() {
-        return Store.state.username;
+        return this.$store.state.username;
       }
     },
     mounted() {
       document.title = 'myCloud - Upload';
       this.insert_url = API_INSERTIMG_URL;
-      setTimeout(() => {Store.commit('setLoading', false);}, 500);
+      setTimeout(() => {this.$store.commit('setLoading', false);}, 500);
     },
     beforeMount() {
-      Store.commit('setLoading', true);
+      this.$store.commit('setLoading', true);
       if (this.$route.query.error) {
-        Store.commit('setError', this.$route.query.error);
+        this.$store.commit('setError', this.$route.query.error);
       }
       if (this.$route.query.redirect) {
         this.$router.replace({ name: this.$route.query.redirect });
       }
-      if (Store.state.redirect) {
-        const redirect = Store.state.redirect;
-        Store.commit('setRedirect', '');
+      if (this.$store.state.redirect) {
+        const redirect = this.$store.state.redirect;
+        this.$store.commit('setRedirect', '');
         this.$router.replace({ name: redirect });
       }
     }

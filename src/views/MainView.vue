@@ -43,7 +43,6 @@
   // @ is an alias to /src
   import axios from 'axios';
   import { API_GETIMGS_URL } from '/config.js';
-  import Store from '@/store/index';
   import ImageGallery from '@/components/ImagesGallery';
   import ErrorComponent from '@/components/ErrorComponent';
 
@@ -72,7 +71,6 @@
           }
           array.push(this.srcImgsList[i]);
         }
-        // console.log(array);
         return array;
       },
     },
@@ -89,8 +87,8 @@
           let queryString = '';
           switch (this.$route.name) {
             case 'LeTueFoto':
-              if (Store.state.username) {
-                queryString = '?username=' + Store.state.username;
+              if (this.$store.state.username) {
+                queryString = '?username=' + this.$store.state.username;
               } else {
                 this.$router.replace({ name: 'home' });
               }
@@ -99,7 +97,7 @@
               queryString = '?username=all';
               break;
             case 'all':
-              if (Store.state.superuser) {
+              if (this.$store.state.superuser) {
                 queryString = '?username=superuser';
               } else {
                 this.$router.replace({ name: 'home' });
@@ -120,10 +118,13 @@
               username: element.username,
             });
           });
-          Store.commit('setLoading', false);
+          if (!this.srcImgsList[(this.maxPerPagina * this.pagina)] && this.pagina > 0) {
+            this.pagina--;
+          }
+          this.$store.commit('setLoading', false);
         } catch (error) {
           this.errorMsg = 'Si è verificato un errore, contattare l\'amministratore. Errore: ' + error;
-          Store.commit('setLoading', false);
+          this.$store.commit('setLoading', false);
         }
       },
       setDocumentTitle() {
@@ -164,13 +165,13 @@
     mounted() {
       this.setDocumentTitle();
       this.loadData();
-      this.pagina = Number(Store.state.page);
-      Store.commit('setPage', 0);
+      this.pagina = Number(this.$store.state.page);
+      this.$store.commit('setPage', 0);
     },
     beforeMount() {
-      if (Store.state.error) {
-        this.errorMsg = Store.state.error;
-        Store.commit('setError', '');
+      if (this.$store.state.error) {
+        this.errorMsg = this.$store.state.error;
+        this.$store.commit('setError', '');
       }
       if (this.$route.query.pagina) {
         this.pagina = Number(this.$route.query.pagina);

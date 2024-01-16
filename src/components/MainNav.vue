@@ -132,10 +132,10 @@
 
 <script>
     import axios from 'axios';
-    import Store from '@/store/index';
     import { API_LOGOUT_URL, CPANEL_URL } from '/config.js';
 
     export default {
+        name: 'MainNav',
         data() {
             return {
                 cpanel_url: CPANEL_URL,
@@ -144,13 +144,13 @@
         },
         computed: {
             logged() {
-                return Store.state.logged;
+                return this.$store.state.logged;
             },
             superuser() {
-                return Store.state.superuser;
+                return this.$store.state.superuser;
             },
             username() {
-                return Store.state.username;
+                return this.$store.state.username;
             },
         },
         methods: {
@@ -183,7 +183,7 @@
             },
             pochita(page) {
                 if (page !== this.$route.name) {
-                  Store.commit('setLoading', true);
+                  this.$store.commit('setLoading', true);
                 }
             }
         },

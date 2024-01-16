@@ -11,25 +11,16 @@
     </main>
     <main-footer />
   </div>
-  <div class="pageLoading" ref="pageLoading" id="mainLoading" v-if="loading">
-    <img :src="require('@/assets/img/loading.gif')" alt="" width="200">
-  </div>
+  <teleport to='body'>
+    <loading-component />
+  </teleport>
 </template>
 
 <script>
   import axios from 'axios';
-  import Store from '@/store/index';
   import { API_CHECKLOGGED_URL } from '/config.js';
-  import MainNav from '@/components/MainNav.vue';
-  import MainFooter from '@/components/MainFooter';
-  import ErrorComponent from '@/components/ErrorComponent';
 
   export default {
-    components: {
-      MainNav,
-      MainFooter,
-      ErrorComponent,
-    },
     data() {
       return {
         errorMsg: ''
@@ -37,14 +28,11 @@
     },
     computed: {
       logged() {
-        return Store.state.logged;
-      },
-      loading() {
-        return Store.state.loading;
+        return this.$store.state.logged;
       },
       // triggera la transition anche se il componente è lo stesso
       componentKey() {
-        return Store.state.componentKey;
+        return this.$store.state.componentKey;
       },
     },
     methods: {
@@ -57,10 +45,10 @@
           if (!response.data.logged) {
             window.location.href = '../login/login.php';
           } else {
-            Store.commit('setLogged', true);
-            Store.commit('setUsername', response.data.username);
+            this.$store.commit('setLogged', true);
+            this.$store.commit('setUsername', response.data.username);
             if (response.data.superuser == true) {
-              Store.commit('setSuperuser', true);
+              this.$store.commit('setSuperuser', true);
             }
           }
         } catch (error) {

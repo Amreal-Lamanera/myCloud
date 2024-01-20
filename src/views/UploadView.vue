@@ -14,7 +14,7 @@
           Seleziona almeno un file!
         </span>
         <p class="text-white pt-4">
-          Vuoi rendere la foto publica?
+          Vuoi rendere la foto pubblica?
         </p>
         <div class="flex gap-6 justify-center">
           <div class="flex gap-3">

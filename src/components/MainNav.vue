@@ -1,7 +1,7 @@
 <template>
     <header class="bg-slate-900">
-        <nav class="px-5">
-            <div class="mx-auto px-2 md:px-6 xl:px-8">
+        <nav>
+            <div class="mx-auto">
                 <div class="relative flex h-16 items-center justify-between">
                     <div class="absolute inset-y-0 right-0 flex items-center xl:hidden">
                         <!-- Mobile menu button-->
@@ -211,7 +211,11 @@ header {
     border-bottom: 1px solid #c1c1c1;
     
     nav {
-        padding: 30px;
+        padding: 1rem 2rem;
+
+        @media (min-width: 768px) {
+            padding: 2rem 3rem;
+        }
     
         a {
           font-weight: bold;

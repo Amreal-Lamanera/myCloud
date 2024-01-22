@@ -5,14 +5,13 @@
                 <div class="relative flex h-16 items-center justify-between">
                     <div class="absolute inset-y-0 right-0 flex items-center xl:hidden">
                         <!-- Mobile menu button-->
-                        <button type="button" class="bordizza inline-flex items-center justify-center sm:rounded-md p-2 text-white hover:bg-slate-600  hover:text-white rounded-full border-sky-700 relative" aria-controls="mobile-menu"
+                        <button type="button" class="bordizza inline-flex items-center justify-center p-2 text-white hover:bg-slate-600  hover:text-white rounded-full border-sky-700 relative" aria-controls="mobile-menu"
                             aria-expanded="false" id="menu-button" @click.stop="handleBurgerMenuClick" ref="burgerIcon">
                             <div class="my_arrow" ref='my_arrow'>
                                 <i class="fa-solid fa-arrow-right fa-beat"></i>
                             </div>
                             <span class="sr-only">Open main menu</span>
-                            
-                            <svg class="block h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            <svg class="block h-6 w-6 md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -21,26 +20,24 @@
                         </button>
                     </div>
                     <div class="flex flex-1 items-center justify-start xl:justify-between" ref="menu">
-                        <a href="/my_site" title="Visita la Homepage" id="logo">
+                        <router-link @click="pochita('home')" :to="{ name: 'home'}" id="logo" title="Vai alla home">
                             <img src="https://www.francescopieraccini.it/my_site/src/img/loghi/light-blue.svg" alt="Logo">
-                        </a>
+                        </router-link>
                         <div class="hidden xl:ml-6 xl:block">
                             <div class="flex space-x-4">
-                                <router-link @click="pochita('home')" :to="{ name: 'home'}">
+                                <router-link @click="pochita('home')" :to="{ name: 'home'}" title="Vai alla home">
                                     Homepage
                                 </router-link>
-                                <router-link @click="pochita('LeTueFoto')" :to="{ name: 'LeTueFoto'}">
+                                <router-link @click="pochita('LeTueFoto')" :to="{ name: 'LeTueFoto'}" title="Vai alle tue foto">
                                     Le foto di: {{ username }}
                                 </router-link>
-                                <span v-if="superuser">
-                                    <router-link @click="pochita('all')" :to="{ name: 'all'}">
+                                <router-link @click="pochita('all')" :to="{ name: 'all'}" v-if="superuser" title="Vai a tutte le foto">
                                     Tutte le foto
-                                    </router-link>
-                                </span>
-                                <router-link @click="pochita('public')" :to="{ name: 'public'}">
+                                </router-link>
+                                <router-link @click="pochita('public')" :to="{ name: 'public'}" title="Vai alle foto pubbliche">
                                     Foto pubbliche
                                 </router-link>
-                                <router-link @click="pochita('upload')" :to="{ name: 'upload'}">
+                                <router-link @click="pochita('upload')" :to="{ name: 'upload'}" title="Vai alla pagina di upload">
                                     Upload
                                 </router-link>
                                 <a href="../" title="Vai alla homepage di francescopieraccini.it">
@@ -49,11 +46,9 @@
                                 <a href="#" title="Effettua il logout" @click="logout" class="cursor-pointer">
                                     Logout
                                 </a>
-                                <span v-if="superuser">
-                                    <a v-if="superuser" :href="cpanel_url" title="Vai al pannello di controllo">
-                                        C-panel
-                                    </a>
-                                </span>
+                                <a v-if="superuser" :href="cpanel_url" title="Vai al pannello di controllo">
+                                    C-panel
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -79,29 +74,27 @@
                         "
                     >
                         <li>
-                            <router-link @click="pochita('home')" :to="{ name: 'home'}">
+                            <router-link @click="pochita('home')" :to="{ name: 'home'}" title="Vai alla home">
                                 Homepage
                             </router-link>
                         </li>
                         <li>
-                            <router-link @click="pochita('LeTueFoto')" :to="{ name: 'LeTueFoto'}">
+                            <router-link @click="pochita('LeTueFoto')" :to="{ name: 'LeTueFoto'}" title="Vai alle tue foto">
                                 Le foto di: {{ username }}
                             </router-link>
                         </li>
                         <li>
-                            <span v-if="superuser">
-                                <router-link @click="pochita('all')" :to="{ name: 'all'}">
-                                    Tutte le foto
-                                </router-link>
-                            </span>
+                            <router-link @click="pochita('all')" :to="{ name: 'all'}" v-if="superuser" title="Vai a tutte le foto">
+                                Tutte le foto
+                            </router-link>
                         </li>
                         <li>
-                            <router-link @click="pochita('public')" :to="{ name: 'public'}">
+                            <router-link @click="pochita('public')" :to="{ name: 'public'}" title="Vai alle foto pubbliche">
                                 Foto pubbliche
                             </router-link>
                         </li>
                         <li>
-                            <router-link @click="pochita('upload')" :to="{ name: 'upload'}">
+                            <router-link @click="pochita('upload')" :to="{ name: 'upload'}" title="Vai alla pagina di upload">
                                 Upload
                             </router-link>
                         </li>
@@ -116,12 +109,9 @@
                             </a>
                         </li>
                         <li>
-                            <span v-if="superuser">
-                            
-                                <a v-if="superuser" :href="cpanel_url" title="Vai alpannello di controllo">
-                                    C-panel
-                                </a>
-                            </span>
+                            <a v-if="superuser" :href="cpanel_url" title="Vai al pannello di controllo">
+                                C-panel
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -211,11 +201,15 @@ header {
     border-bottom: 1px solid #c1c1c1;
     
     nav {
-        padding: 1rem 2rem;
+        padding: 0.5rem 2.5rem;
 
         @media (min-width: 768px) {
-            padding: 2rem 3rem;
+            padding: 2rem 4rem;
         }
+
+      @media (min-width: 1280px) {
+        padding: 2rem 2rem;
+      }
     
         a {
           font-weight: bold;
@@ -232,22 +226,27 @@ header {
 
     #logo {
         font-family: 'Dancing Script', cursive;
-        width: 4rem;
-        height: 4rem;
+        width:3rem;
+        height: 3rem;
         color: #000;
+
+      @media (min-width: 768px) {
+        width:4rem;
+        height: 4rem;
+      }
     }
 
     .my_arrow {
         position: absolute;
         left: -3rem;
         font-size: 2rem;
-        animation: showArrow 1.5s linear 2;
+        animation: showArrow 2s linear 3;
         animation-delay: 5s;
         opacity: 0;
     }
 
     .my_arrow .fa-arrow-right {
-        color: #c1c1c1;
+        color: #e1ef1a;
     }
 
     @keyframes showArrow {
@@ -263,18 +262,18 @@ header {
     }
 
     #menu-button {
-        border: 4px solid transparent;
+        border: 2px solid #c1c1c1;
     }
 
     .bordizza {
-        animation: bordizza 1.5s linear 2;
+        animation: bordizza 2s linear 3;
         animation-delay: 5s;
     }
 
     @keyframes bordizza {
 
         0% {
-            border: 4px solid transparent;
+            border: 2px solid #FDEE24;
         }
 
         20% {
@@ -294,7 +293,7 @@ header {
         }
 
         100% {
-            border-color: transparent;
+            border-color: #FDEE24;
         }
 
     }

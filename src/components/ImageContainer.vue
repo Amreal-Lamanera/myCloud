@@ -22,7 +22,7 @@
       >
         download
       </div>
-      <div
+      <div v-if="isSuperUser"
           class="text-white font-bold cursor-pointer bg-red-500 border-white border-2 p-3 uppercase hover:bg-red-950"
           @click="deleteFile(filename, imageError)"
       >
@@ -47,6 +47,10 @@ export default {
 
       // IMGS_DIR (percorso alla cartella cloudImgs dentro a myCloud) + username/ (sottocartella) + compressed_filename (compressed_filename.webp)
       return `${IMGS_DIR}${this.image.username}/${compressed_filename}`;
+    },
+    isSuperUser() {
+      // nella sezione pubblica solo il superuser può eliminare le immagini
+      return this.image.username !== 'all' || this.$store.state.superuser;
     },
     srcOriginal() {
       return `${IMGS_DIR}${this.image.username}/${this.image.filename}`;

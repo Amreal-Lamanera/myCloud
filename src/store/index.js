@@ -4,6 +4,7 @@ export default createStore({
   state: {
     logged: false,
     superuser: false,
+    special_guess_type: '',
     username: '',
     error: '',
     page: 0,
@@ -19,6 +20,9 @@ export default createStore({
     },
     setSuperuser(state, value) {
       state.superuser = value;
+    },
+    setSpecialGuessType(state, value) {
+      state.special_guess_type = value;
     },
     setUsername(state, value) {
       state.username = value;

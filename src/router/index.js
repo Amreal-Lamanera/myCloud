@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import BlankView from '../views/BlankView.vue'
 import MainView from '../views/MainView.vue'
 import UploadView from '../views/UploadView.vue'
+import UploadRaven from '../views/UploadRaven.vue'
+import RavenView from '../views/RavenView.vue'
 import Store from '@/store/index';
 
 const routes = [
@@ -15,6 +17,16 @@ const routes = [
     path: '/blankPage',
     name: 'blank',
     component: BlankView,
+  },
+  {
+    path: '/raven',
+    name: 'raven',
+    component: RavenView,
+  },
+  {
+    path: '/ravenUpload',
+    name: 'raven-up',
+    component: UploadRaven,
   },
   {
     path: '/LeTueFoto',

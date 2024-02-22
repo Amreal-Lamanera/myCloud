@@ -37,6 +37,22 @@
                                 <router-link @click="pochita('public')" :to="{ name: 'public'}" title="Vai alle foto pubbliche">
                                     Foto pubbliche
                                 </router-link>
+                              <router-link
+                                  v-if="superuser || specialGuessType === 'raven'"
+                                  @click="pochita('raven')"
+                                  :to="{ name: 'raven'}"
+                                  title="Sezione xFoW Raven"
+                              >
+                                xFoW Raven
+                              </router-link>
+                              <router-link
+                                  v-if="superuser || specialGuessType === 'raven'"
+                                  @click="pochita('raven-up')"
+                                  :to="{ name: 'raven-up'}"
+                                  title="Sezione xFoW Raven"
+                              >
+                                xFoW Raven Upload
+                              </router-link>
                                 <router-link @click="pochita('upload')" :to="{ name: 'upload'}" title="Vai alla pagina di upload">
                                     Upload
                                 </router-link>
@@ -93,6 +109,26 @@
                                 Foto pubbliche
                             </router-link>
                         </li>
+                      <li>
+                        <router-link
+                            v-if="superuser || specialGuessType === 'raven'"
+                            @click="pochita('raven')"
+                            :to="{ name: 'raven'}"
+                            title="Sezione xFoW Raven"
+                        >
+                          xFoW Raven
+                        </router-link>
+                      </li>
+                      <li>
+                        <router-link
+                            v-if="superuser || specialGuessType === 'raven'"
+                            @click="pochita('raven-up')"
+                            :to="{ name: 'raven-up'}"
+                            title="Sezione xFoW Raven"
+                        >
+                          xFoW Raven Upload
+                        </router-link>
+                      </li>
                         <li>
                             <router-link @click="pochita('upload')" :to="{ name: 'upload'}" title="Vai alla pagina di upload">
                                 Upload
@@ -142,6 +178,9 @@
             username() {
                 return this.$store.state.username;
             },
+          specialGuessType() {
+              return this.$store.state.special_guess_type;
+          }
         },
         methods: {
             async logout() {

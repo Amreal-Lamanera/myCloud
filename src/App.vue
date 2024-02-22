@@ -45,11 +45,16 @@
           if (!response.data.logged) {
             window.location.href = '../login/login.php';
           } else {
+            console.log(response.data);
             this.$store.commit('setLogged', true);
             this.$store.commit('setUsername', response.data.username);
             if (response.data.superuser == true) {
               this.$store.commit('setSuperuser', true);
             }
+            if (response.data.special_guess) {
+              this.$store.commit('setSpecialGuessType', response.data.special_guess);
+            }
+            console.log(this.$store.state.special_guess_type)
           }
         } catch (error) {
           this.errorMsg = 'Si è verificato un errore, contattare l\'amministratore. Errore: ' + error;

@@ -11,6 +11,10 @@ export const API_DELETEIMG_URL =
     (process.env.NODE_ENV === 'production') ?
         'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/deleteImgFromCloud.php' :
         'http://francescopieraccini.localhost/admin/c-panel/apis/deleteImgFromCloud.php';
+export const API_DELETERAVEN_URL =
+    (process.env.NODE_ENV === 'production') ?
+        'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/deleteRaven.php' :
+        'http://francescopieraccini.localhost/admin/c-panel/apis/deleteRaven.php';
 export const API_CHECKLOGGED_URL =
     (process.env.NODE_ENV === 'production') ?
         'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/checkLogged.php' :

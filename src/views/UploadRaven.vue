@@ -4,7 +4,7 @@
        <form :action="insert_url" method="POST" enctype="multipart/form-data" class="p-14 text-xs sm:text-base text-white flex flex-col gap-3" ref="form_upload">
          <div class="flex flex-col gap-3" id="map_container">
            <label for="map">
-             Mappa:
+             Mappa / Categoria:
            </label>
            <input type="text" id="map" name="map" required>
          </div>
@@ -36,6 +36,12 @@
            </label>
            <textarea name="descrizione" id="descrizione" cols="30" rows="10"></textarea>
          </div>
+         <select name="categoria" id="categoria"
+         class="w-full p-2 bg-slate-400 text-white rounded-lg">
+            <option value="">- SELEZIONA CATEGORIA -</option>
+            <option value="mappe">Mappe</option>
+            <option value="classi">Classi</option>
+         </select>
         <div class="text-center">
           <input type="submit" value="CARICA" class="btn cursor-pointer text-white mt-2 bg-blue-600 p-3 border border-white rounded-full hover:bg-blue-950" @click="upload">
         </div>
@@ -79,7 +85,7 @@ import { API_INSERT_STRAT_XFOW_URL } from '/config.js';
 label {
   text-align: left;
 }
-input, textarea {
+input[type='text'], textarea {
   color: black;
 }
 </style>

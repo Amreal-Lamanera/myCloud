@@ -2,22 +2,40 @@
   <section class="px-4">
     <error-component :errorMsg="errorMsg" />
     <div class="container mx-auto">
-      <select name="maps" id="maps" class="w-full p-4 bg-slate-700 text-white text-xl"
-              @change="handleContent($event.target.value)">
+      <select name="categorie" id="categorie" class="w-full p-4 mb-4 bg-slate-700 text-white text-xl"
+              @change="handleCategorie($event.target.value)">
         <option value="" selected disabled>
-          - SELEZIONA UNA MAPPA -
+          - SELEZIONA UNA CATEGORIA -
+        </option>
+        <template v-for="categoria,i in categorie" :key="i">
+            <option :value="categoria" class="capitalize">
+                {{ capitalize(categoria) }}
+            </option>
+        </template>
+      </select>
+      <select v-if="selectedCategoria" name="maps" id="maps" class="w-full p-4 bg-slate-700 text-white text-xl" ref="mapSelect"
+              @change="handleData($event.target.value)">
+        <option value="" selected disabled>
+            - SELEZIONA UNA
+            <span v-if="selectedCategoria === 'mappe'">
+                MAPPA
+            </span>
+            <span v-else>
+                CATEGORIA
+            </span>
+            -
         </option>
         <template v-for="map,i in maps" :key="i">
-          <option :value="map"> {{ map }} </option>
+          <option :value="i"> {{ i }} </option>
         </template>
       </select>
     </div>
     <div
-        v-if="selectedData.length > 0"
+        v-if="selectedMap"
         class="flex-col flex gap-6 text-white py-6 container mx-auto"
     >
-      <div v-for="(data, j) in selectedData" :key="j+1000">
-        <strat-element :data="data" />
+      <div v-for="(data, j) in selectedMap" :key="j+1000">
+        <raven-element :data="data" />
       </div>
     </div>
   </section>
@@ -30,38 +48,52 @@ import axios from 'axios';
 import { API_GETSTRATS_URL } from '/config.js';
 // import ImageGallery from '@/components/ImagesGallery';
 import ErrorComponent from '@/components/ErrorComponent';
-import StratElement from "@/components/StratElement";
+import RavenElement from "@/components/RavenElement";
 
 export default {
   name: 'HomeView',
   components: {
-    StratElement,
+    RavenElement,
     // ImageGallery,
     ErrorComponent,
   },
-  props: {
-  },
   data() {
     return {
+      categorie: [],
       maps: [],
       strats: [],
       maxPerPagina: 12,
       pagina: 0,
       errorMsg: '',
-      selectedData:[],
+      selectedCategoria: '',
+      selectedMap: [],
     };
   },
   methods: {
-    handleContent(map) {
-      this.selectedData = [];
-      this.strats[map].forEach((element) => {
-        this.selectedData.push({
+    handleCategorie(categoria) {
+        this.selectedMap = [];
+        this.selectedCategoria = categoria;
+        this.maps = this.strats[categoria];
+        this.$nextTick(() => {
+            if (this.$refs.mapSelect) {
+                this.$refs.mapSelect.value = '';
+            }
+        });
+    },
+    handleData(map) {
+        this.selectedMap = [];
+        this.maps[map].forEach((element) => {
+        this.selectedMap.push({
           'titolo': element.titolo,
           'descrizione': element.descrizione,
           'foto': element.foto,
           'id': element.id,
+          'categoria': element.categoria
         });
       })
+    },
+    capitalize(text) {
+        return text.charAt(0).toUpperCase() + text.slice(1);
     },
     // Funzione per effettuare la chiamata API
     async fetchData() {
@@ -69,7 +101,7 @@ export default {
         // Esegui la chiamata API utilizzando axios
         const response = await axios.get(API_GETSTRATS_URL);
 
-        this.maps = Object.keys(response.data);
+        this.categorie = Object.keys(response.data);
         this.strats = response.data;
 
         this.$store.commit('setLoading', false);
@@ -83,7 +115,7 @@ export default {
     },
 
     async loadData() {
-      this.maps = [];
+      this.categorie = [];
       this.fetchData();
     },
     handlerPagina(operazione) {

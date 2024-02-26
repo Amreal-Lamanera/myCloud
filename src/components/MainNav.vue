@@ -39,16 +39,16 @@
                                 </router-link>
                               <router-link
                                   v-if="superuser || specialGuessType === 'raven'"
-                                  @click="pochita('raven')"
-                                  :to="{ name: 'raven'}"
+                                  @click="pochita('cod')"
+                                  :to="{ name: 'cod'}"
                                   title="Sezione xFoW Raven"
                               >
                                 xFoW Raven
                               </router-link>
                               <router-link
                                   v-if="superuser || specialGuessType === 'raven'"
-                                  @click="pochita('raven-up')"
-                                  :to="{ name: 'raven-up'}"
+                                  @click="pochita('cod-up')"
+                                  :to="{ name: 'cod-up'}"
                                   title="Sezione xFoW Raven"
                               >
                                 xFoW Raven Upload
@@ -112,8 +112,8 @@
                       <li>
                         <router-link
                             v-if="superuser || specialGuessType === 'raven'"
-                            @click="pochita('raven')"
-                            :to="{ name: 'raven'}"
+                            @click="pochita('cod')"
+                            :to="{ name: 'cod'}"
                             title="Sezione xFoW Raven"
                         >
                           xFoW Raven
@@ -122,8 +122,8 @@
                       <li>
                         <router-link
                             v-if="superuser || specialGuessType === 'raven'"
-                            @click="pochita('raven-up')"
-                            :to="{ name: 'raven-up'}"
+                            @click="pochita('cod-up')"
+                            :to="{ name: 'cod-up'}"
                             title="Sezione xFoW Raven"
                         >
                           xFoW Raven Upload

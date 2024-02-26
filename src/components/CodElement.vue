@@ -13,7 +13,7 @@
         </p>
       </div>
       
-      <div id="descrizione-container"
+      <div id="delete-container" v-if="isSuperUser"
       class="text-white font-bold cursor-pointer bg-red-500 border-white border-2 p-3 uppercase hover:bg-red-950"
       @click="deleteElement">
         elimina
@@ -33,6 +33,10 @@ export default {
   computed: {
     src() {
       return `${IMGS_DIR}raven/${this.data.foto}`;
+    },
+    isSuperUser() {
+      // solo il superuser può eliminare le immagini
+      return this.$store.state.superuser;
     },
   },
   methods: {

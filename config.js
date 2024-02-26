@@ -7,6 +7,10 @@ export const API_GETSTRATS_URL =
     (process.env.NODE_ENV === 'production') ?
         'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/getStrats.php' :
         'http://francescopieraccini.localhost/admin/c-panel/apis/getStrats.php';
+export const API_GETMAPS_URL =
+    (process.env.NODE_ENV === 'production') ?
+        'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/getMaps.php' :
+        'http://francescopieraccini.localhost/admin/c-panel/apis/getMaps.php';
 export const API_DELETEIMG_URL =
     (process.env.NODE_ENV === 'production') ?
         'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/deleteImgFromCloud.php' :

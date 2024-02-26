@@ -35,7 +35,7 @@
         class="flex-col flex gap-6 text-white py-6 container mx-auto"
     >
       <div v-for="(data, j) in selectedMap" :key="j+1000">
-        <raven-element :data="data" />
+        <cod-element :data="data" />
       </div>
     </div>
   </section>
@@ -48,12 +48,12 @@ import axios from 'axios';
 import { API_GETSTRATS_URL } from '/config.js';
 // import ImageGallery from '@/components/ImagesGallery';
 import ErrorComponent from '@/components/ErrorComponent';
-import RavenElement from "@/components/RavenElement";
+import CodElement from "@/components/CodElement";
 
 export default {
   name: 'HomeView',
   components: {
-    RavenElement,
+    CodElement,
     // ImageGallery,
     ErrorComponent,
   },

@@ -16,14 +16,15 @@
       <select v-if="selectedCategoria" name="maps" id="maps" class="w-full p-4 bg-slate-700 text-white text-xl" ref="mapSelect"
               @change="handleData($event.target.value)">
         <option value="" selected disabled>
-            - SELEZIONA UNA
             <span v-if="selectedCategoria === 'mappe'">
-                MAPPA
+                - SELEZIONA UNA MAPPA -
             </span>
-            <span v-else>
-                CATEGORIA
+            <span v-else-if="categorie">
+                - SELEZIONA UNA CATEGORIA -
             </span>
-            -
+            <span v-else-if="cw">
+                - SELEZIONA UNA CW -
+            </span>
         </option>
         <template v-for="map,i in maps" :key="i">
           <option :value="i"> {{ i }} </option>

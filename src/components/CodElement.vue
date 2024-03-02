@@ -9,7 +9,7 @@
       </div>
 
       <div id="descrizione-container">
-        <p class="text-lg py-3 text-left" v-html="data.descrizione">
+        <p class="text-lg py-3 text-left" v-html="data.descrizione.replace(/\r\n/g, '<br>')">
         </p>
       </div>
       
@@ -84,7 +84,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.data)
+    console.log(this.data.descrizione)
   }
 }
 

@@ -8,23 +8,42 @@
                     </label>
                 <select name="categoria" id="categoria" class="w-full p-2 bg-slate-400 text-black rounded-lg" @input="updateSelectedCat">
                     <option value="" selected disabled>- SELEZIONA CATEGORIA -</option>
-                    <option value="mappe">Mappe</option>
                     <option value="classi">Classi</option>
                     <option value="cw">CW</option>
+                    <option value="mappe">Mappe</option>
                 </select>
-                <div class="flex flex-col gap-3" id="map_container">
-                    <label for="map">
-                        Mappa / Sezione:
+                <div class="flex flex-col gap-3" id="map_container" v-if="selectedCategoria">
+                    <label for="map" v-if="selectedCategoria === 'mappe'">
+                        Mappa:
                     </label>
-                    <select name="map" id="map" required @input="updateSelectedValues"
+                    <label for="map" v-else-if="selectedCategoria === 'cw'">
+                        Team:
+                    </label>
+                    <label for="map" v-else-if="selectedCategoria === 'classi'">
+                        Sezione classi:
+                    </label>
+                    <select name="map" id="map" required @input="updateSelectedValues" v-model="selectedOption"
                         class="w-full p-2 bg-slate-400 text-black rounded-lg">
-                        <option value="" selected disabled>- SELEZIONA LA MAPPA / CATEGORIA -</option>
+                        <option value="" selected disabled v-if="selectedCategoria === 'mappe'">
+                            - SELEZIONA LA MAPPA -
+                        </option>
+                        <option value="" selected disabled v-else-if="selectedCategoria === 'cw'">
+                            - SELEZIONA IL TEAM -
+                        </option>
+                        <option value="" selected disabled v-else-if="selectedCategoria === 'classi'">
+                            - SELEZIONA LA SEZIONE -
+                        </option>
                         <option v-for="map, i in sezioneOptions" :key="i" :value="map.mappa" :data-categoria="map.categoria">
                             {{ map.mappa }}
                         </option>
                         <option value="new" data-categoria="new" v-if="selectedCategoria"> * NUOVA * </option>
                     </select>
-                    <input type="text" id="map-new" name="map-new" :class="selectedOption !== 'new' ? 'hidden' : ''" />
+                    <input type="text" id="map-new" name="map-new" :class="selectedOption !== 'new' ? 'hidden' : ''" 
+                        :placeholder="selectedCategoria === 'mappe' ? 'Inserisci il nome della mappa' : 
+                        selectedCategoria === 'cw' ? 'Inserisci il nome del team' :
+                        selectedCategoria === 'classi' ? 'Inserisci il nome della sezione' :
+                        ''"
+                    />
                 </div>
                 <div class="flex flex-col gap-3" id="title_container">
                     <label for="title">
@@ -99,9 +118,9 @@ export default {
                 this.$store.commit('setLoading', false);
             }
         },
-        updateSelectedValues(event) {
-            this.selectedOption = event.target.value;
-        },
+        // updateSelectedValues(event) {
+        //     this.selectedOption = event.target.value;
+        // },
         updateSelectedCat(event) {
             this.selectedCategoria = '';
             this.selectedOption = '';

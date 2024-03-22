@@ -112,7 +112,7 @@ export default {
       }
     },
     setDocumentTitle() {
-      document.title = 'xFoW Raven';
+      document.title = 'Call of Duty';
     },
 
     async loadData() {

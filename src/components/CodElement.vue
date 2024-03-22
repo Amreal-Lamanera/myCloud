@@ -23,7 +23,7 @@
 
 <script>
 
-import {IMGS_DIR, API_DELETERAVEN_URL} from "../../config";
+import {IMGS_DIR, API_DELETECOD_URL} from "../../config";
 import axios from "axios";
 
 export default {
@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     src() {
-      return `${IMGS_DIR}raven/${this.data.foto}`;
+      return `${IMGS_DIR}cod/${this.data.foto}`;
     },
     isSuperUser() {
       // solo il superuser può eliminare le immagini
@@ -49,7 +49,7 @@ export default {
         },
       };
 
-      axios.post(API_DELETERAVEN_URL, {
+      axios.post(API_DELETECOD_URL, {
         id: this.data.id,
         img: this.data.foto,
         pagina: this.pagina,

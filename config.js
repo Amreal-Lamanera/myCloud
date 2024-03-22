@@ -15,10 +15,10 @@ export const API_DELETEIMG_URL =
     (process.env.NODE_ENV === 'production') ?
         'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/deleteImgFromCloud.php' :
         'http://francescopieraccini.localhost/admin/c-panel/apis/deleteImgFromCloud.php';
-export const API_DELETERAVEN_URL =
+export const API_DELETECOD_URL =
     (process.env.NODE_ENV === 'production') ?
-        'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/deleteRaven.php' :
-        'http://francescopieraccini.localhost/admin/c-panel/apis/deleteRaven.php';
+        'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/deleteCod.php' :
+        'http://francescopieraccini.localhost/admin/c-panel/apis/deleteCod.php';
 export const API_CHECKLOGGED_URL =
     (process.env.NODE_ENV === 'production') ?
         'https://www.francescopieraccini.it/my_site/admin/c-panel/apis/checkLogged.php' :
@@ -31,10 +31,10 @@ export const API_INSERTIMG_URL =
     (process.env.NODE_ENV === 'production') ?
         "https://www.francescopieraccini.it/my_site/admin/c-panel/apis/insertImgsInCloud.php" :
         "http://francescopieraccini.localhost/admin/c-panel/apis/insertImgsInCloud.php";
-export const API_INSERT_STRAT_XFOW_URL =
+export const API_INSERT_COD_URL =
     (process.env.NODE_ENV === 'production') ?
-        "https://www.francescopieraccini.it/my_site/admin/c-panel/apis/insertStratXfow.php" :
-        "http://francescopieraccini.localhost/admin/c-panel/apis/insertStratXfow.php";
+        "https://www.francescopieraccini.it/my_site/admin/c-panel/apis/insertCod.php" :
+        "http://francescopieraccini.localhost/admin/c-panel/apis/insertCod.php";
 export const CPANEL_URL =
     (process.env.NODE_ENV === 'production') ?
         "https://www.francescopieraccini.it/my_site/admin/c-panel/" :

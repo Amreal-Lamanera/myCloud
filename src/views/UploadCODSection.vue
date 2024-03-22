@@ -80,12 +80,12 @@
 
 <script>
 import axios from 'axios';
-import { API_INSERT_STRAT_XFOW_URL, API_GETMAPS_URL } from '/config.js';
+import {API_INSERT_COD_URL, API_GETMAPS_URL} from '/config.js';
 
 export default {
     data() {
         return {
-            insert_url: API_INSERT_STRAT_XFOW_URL,
+        insert_url: API_INSERT_COD_URL,
             selectedOption: '',
             selectedCategoria: '',
             mapsFromDB: [],

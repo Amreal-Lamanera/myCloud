@@ -38,20 +38,20 @@
                                     Foto pubbliche
                                 </router-link>
                               <router-link
-                                  v-if="superuser || specialGuessType === 'raven'"
+                                  v-if="superuser || specialGuessType === 'coduser'"
                                   @click="pochita('cod')"
                                   :to="{ name: 'cod'}"
-                                  title="Sezione xFoW Raven"
+                                  title="Sezione Call of Duty"
                               >
-                                xFoW Raven
+                                Call of Duty
                               </router-link>
                               <router-link
-                                  v-if="superuser || specialGuessType === 'raven'"
+                                  v-if="superuser || specialGuessType === 'coduser'"
                                   @click="pochita('cod-up')"
                                   :to="{ name: 'cod-up'}"
-                                  title="Sezione xFoW Raven"
+                                  title="Sezione Call of Duty"
                               >
-                                xFoW Raven Upload
+                                CoD Upload
                               </router-link>
                                 <router-link @click="pochita('upload')" :to="{ name: 'upload'}" title="Vai alla pagina di upload">
                                     Upload
@@ -111,22 +111,22 @@
                         </li>
                       <li>
                         <router-link
-                            v-if="superuser || specialGuessType === 'raven'"
+                            v-if="superuser || specialGuessType === 'coduser'"
                             @click="pochita('cod')"
                             :to="{ name: 'cod'}"
-                            title="Sezione xFoW Raven"
+                            title="Sezione Call of Duty"
                         >
-                          xFoW Raven
+                          Call of Duty
                         </router-link>
                       </li>
                       <li>
                         <router-link
-                            v-if="superuser || specialGuessType === 'raven'"
+                            v-if="superuser || specialGuessType === 'coduser'"
                             @click="pochita('cod-up')"
                             :to="{ name: 'cod-up'}"
-                            title="Sezione xFoW Raven"
+                            title="Call of Duty"
                         >
-                          xFoW Raven Upload
+                          CoD Upload
                         </router-link>
                       </li>
                         <li>

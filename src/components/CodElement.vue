@@ -12,6 +12,13 @@
         <p class="text-lg py-3 text-left" v-html="data.descrizione.replace(/\r\n/g, '<br>')">
         </p>
       </div>
+
+      <router-link id="edit-container"
+           class="block text-white font-bold cursor-pointer bg-sky-500 border-white border-2 p-3 uppercase hover:bg-sky-950 my-5"
+           :to="{ name: 'edit', params: { id: data.id }}"
+      >
+        modifica
+      </router-link>
       
       <div id="delete-container" v-if="isSuperUser"
       class="text-white font-bold cursor-pointer bg-red-500 border-white border-2 p-3 uppercase hover:bg-red-950"
@@ -84,7 +91,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.data.descrizione)
+    console.log(this.data)
   }
 }
 

@@ -5,9 +5,9 @@
                 class="p-14 text-xs sm:text-base text-white flex flex-col gap-3" ref="form_upload">
                 <label for="categoria">
                         Categoria:
-                    </label>
-                <select name="categoria" id="categoria" class="w-full p-2 bg-slate-400 text-black rounded-lg" @input="updateSelectedCat">
-                    <option value="" selected disabled>- SELEZIONA CATEGORIA -</option>
+                </label>
+                <select v-model="editData.categoria" name="categoria" id="categoria" class="w-full p-2 bg-slate-400 text-black rounded-lg" @input="updateSelectedCat">
+                    <option value="" disabled>- SELEZIONA CATEGORIA -</option>
                     <option value="classi">Classi</option>
                     <option value="cw">CW</option>
                     <option value="mappe">Mappe</option>
@@ -49,7 +49,7 @@
                     <label for="title">
                         Titolo:
                     </label>
-                    <input type="text" id="title" name="title" required>
+                    <input type="text" id="title" name="title" required :value="editData.titolo">
                 </div>
                 <div class="flex flex-col gap-3" id="ph_container">
                     <label for="ph">
@@ -61,18 +61,25 @@
                     <span class="hidden text-red-700 font-bold" ref="filesError">
                         Seleziona almeno un file!
                     </span>
+                  <div v-if="editData.foto">
+                    <p>Foto Attuale: </p>
+                    <img :src="`${imgs_dir}cod/${editData.foto}`" />
+                  </div>
                 </div>
                 <div class="flex flex-col gap-3" id="descrizione-container">
                     <label for="descrizione">
                         Descrizione:
                     </label>
-                    <textarea name="descrizione" id="descrizione" cols="30" rows="10"></textarea>
+                    <textarea name="descrizione" id="descrizione" cols="30" rows="10"  v-model="editData.descrizione"></textarea>
                 </div>
                 <div class="text-center">
                     <input type="submit" value="CARICA"
                         class="btn cursor-pointer text-white mt-2 bg-blue-600 p-3 border border-white rounded-full hover:bg-blue-950"
                         @click="upload">
                 </div>
+              <div v-if="editData.id">
+                <input type="hidden" name="id" :value="editData.id" />
+              </div>
             </form>
         </div>
     </section>
@@ -80,15 +87,16 @@
 
 <script>
 import axios from 'axios';
-import {API_INSERT_COD_URL, API_GETMAPS_URL} from '/config.js';
+import {API_INSERT_COD_URL, API_GETMAPS_URL, API_GETSTRATS_URL, IMGS_DIR} from '/config.js';
 
 export default {
     data() {
         return {
-        insert_url: API_INSERT_COD_URL,
+            insert_url: API_INSERT_COD_URL,
             selectedOption: '',
             selectedCategoria: '',
             mapsFromDB: [],
+            editData: [],
         }
     },
     computed: {
@@ -102,7 +110,10 @@ export default {
                 });
             }
             return options;
-        }
+        },
+      imgs_dir() {
+          return IMGS_DIR;
+      }
     },
     methods: {
         async fetchData() {
@@ -118,9 +129,25 @@ export default {
                 this.$store.commit('setLoading', false);
             }
         },
-        // updateSelectedValues(event) {
-        //     this.selectedOption = event.target.value;
-        // },
+        // Funzione per effettuare la chiamata API
+        async fetchDataEdit(id) {
+          try {
+            // Esegui la chiamata API utilizzando axios
+            const response = await axios.get(API_GETSTRATS_URL + '?id=' + id);
+
+            this.$store.commit('setLoading', false);
+
+            console.log('AIOO')
+            console.log(response.data[0]);
+
+            this.editData = response.data[0];
+            this.selectedCategoria = this.editData.categoria;
+            this.selectedOption = this.editData.mappa;
+          } catch (error) {
+            this.errorMsg = 'Si è verificato un errore, contattare l\'amministratore. Errore: ' + error;
+            this.$store.commit('setLoading', false);
+          }
+        },
         updateSelectedCat(event) {
             this.selectedCategoria = '';
             this.selectedOption = '';
@@ -131,10 +158,12 @@ export default {
             const files = this.$refs.files;
             const filesError = this.$refs.filesError;
             event.preventDefault();
-            if (!files.files.length) {
+            if (!this.editData) {
+              if (!files.files.length) {
                 files.classList.add('border-red-600', 'border-2');
                 filesError.classList.remove('hidden');
                 return;
+              }
             }
             this.$store.commit('setLoading', true);
             form.submit();
@@ -145,6 +174,9 @@ export default {
         document.title = 'myCloud - Upload';
         this.mapsFromDB = [];
         this.fetchData();
+        if (this.$route.params.id) {
+          this.fetchDataEdit(this.$route.params.id);
+        }
     },
 }
 </script>

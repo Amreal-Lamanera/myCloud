@@ -29,6 +29,11 @@ const routes = [
     component: UploadCODSection,
   },
   {
+    path: '/edit/:id',
+    name: 'edit',
+    component: UploadCODSection,
+  },
+  {
     path: '/LeTueFoto',
     name: 'LeTueFoto',
     component: MainView,

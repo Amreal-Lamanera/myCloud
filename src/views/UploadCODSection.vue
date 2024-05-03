@@ -6,7 +6,7 @@
                 <label for="categoria">
                         Categoria:
                 </label>
-                <select v-model="editData.categoria" name="categoria" id="categoria" class="w-full p-2 bg-slate-400 text-black rounded-lg" @input="updateSelectedCat">
+                <select v-model="selectedCategoria" name="categoria" id="categoria" class="w-full p-2 bg-slate-400 text-black rounded-lg" @input="updateSelectedCat">
                     <option value="" disabled>- SELEZIONA CATEGORIA -</option>
                     <option value="classi">Classi</option>
                     <option value="cw">CW</option>
